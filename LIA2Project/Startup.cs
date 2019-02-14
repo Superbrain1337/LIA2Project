@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using LIA2Project.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LIA2Project
 {
@@ -27,6 +29,8 @@ namespace LIA2Project
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            string cs = Configuration.GetConnectionString("The_Right_String");
+            services.AddDbContext<DuoSTATIONContext>(options => options.UseSqlServer(cs));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
