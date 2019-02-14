@@ -1,6 +1,6 @@
-﻿import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+﻿import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
 
 export class FetchCase extends Component {
     constructor(props) {
@@ -14,15 +14,15 @@ export class FetchCase extends Component {
             });
 
         // This binding is necessary to make "this" work in the callback  
-        this.handleDelete = this.handleDelete.bind(this);
+        //this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
 
     }
 
-
+    /*
     // Handle Delete request for a case  
     handleDelete(id) {
-        if (!confirm("Do you want to delete case with Id: " + id))
+        if (confirm("Do you want to delete case with Id: " + id))
             return;
         else {
             fetch('api/Cases/Delete/' + id, {
@@ -36,7 +36,7 @@ export class FetchCase extends Component {
                     });
             });
         }
-    }
+    } */
 
     handleEdit(id) {
         this.props.history.push("/cases/edit/" + id);
