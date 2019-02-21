@@ -5,6 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { FetchCase } from './components/FetchCase';
+import { AddCase } from './components/AddCase';
 
 export default class App extends Component {
   displayName = App.name
@@ -16,6 +17,7 @@ export default class App extends Component {
         <Route path='/counter' component={Counter} />
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/fetchcase' component={FetchCase} />
+        <Route path='/addcase' component={AddCase} />
       </Layout>
     );
   }

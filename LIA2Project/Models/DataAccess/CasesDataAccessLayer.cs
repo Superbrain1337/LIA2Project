@@ -26,11 +26,11 @@ namespace LIA2Project.Models.DataAccess
 
 
         //To Add new employee record     
-        public int AddCase(Cases tblcase)
+        public int AddCase(Cases cases)
         {
             try
             {
-                db.Cases.Add(tblcase);
+                db.Cases.Add(cases);
                 db.SaveChanges();
                 return 1;
             }
