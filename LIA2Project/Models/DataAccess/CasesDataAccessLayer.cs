@@ -77,8 +77,8 @@ namespace LIA2Project.Models.DataAccess
         {
             try
             {
-                Cases cas = db.Cases.Find(id);
-                db.Cases.Remove(cas);
+                Cases emp = db.Cases.Find(id);
+                db.Cases.Remove(emp);
                 db.SaveChanges();
                 return 1;
             }
