@@ -4,8 +4,9 @@ export class Home extends Component {
   displayName = Home.name
 
   render() {
-    return (
-      <div>
+      return (
+          <div>
+            <p>Hallå nu testar vi massa bokstäver detta är de svenska tecknen  å  ä  ö  Å  Ä  Ö</p>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>

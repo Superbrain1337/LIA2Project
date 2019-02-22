@@ -77,12 +77,12 @@ export class AddCase extends Component {
         return (
             <form onSubmit={this.handleSave} >
                 <div className="form-group row" >
-                    <input type="hidden" name="caseId" value={this.state.empData.CaseId} />
+                    <input type="hidden" name="caseId" value={this.state.empData.caseId} />
                 </div>
                 < div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="Name">Case Name</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="caseName" defaultValue={this.state.empData.CaseName} required />
+                        <input className="form-control" type="text" name="caseName" defaultValue={this.state.empData.caseName} required />
                     </div>
                 </div >
                 <div className="form-group">

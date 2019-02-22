@@ -23,7 +23,7 @@ export class FetchCase extends Component {
     
     // Handle Delete request for a case  
     handleDelete(id) {
-        if (window.confirm("Do you want to delete case with Id: " + id))
+        if (!window.confirm("Do you want to delete case with Id: " + id))
             return;
         else {
             fetch('api/Cases/Delete/' + id, {
@@ -32,7 +32,7 @@ export class FetchCase extends Component {
                 this.setState(
                     {
                         empList: this.state.empList.filter((rec) => {
-                            return (rec.CaseId !== id);
+                            return (rec.caseId !== id);
                         })
                     });
             });
@@ -56,13 +56,13 @@ export class FetchCase extends Component {
                 </thead>
                 <tbody>
                     {empList.map(emp =>
-                        (<tr key={emp.CaseId}>
+                        (<tr key={emp.caseId}>
                             <td></td>
-                            <td>{emp.CaseId}</td>
-                            <td>{emp.CaseName}</td>
+                            <td>{emp.caseId}</td>
+                            <td>{emp.caseName}</td>
                             <td>
-                                <a className="action" onClick={(id) => this.handleEdit(emp.CaseId)}>Edit</a>  |
-                            <a className="action" onClick={(id) => this.handleDelete(emp.CaseId)}>Delete</a>
+                                <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
+                            <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
                             </td>
                         </tr>)
                     )}
@@ -88,6 +88,6 @@ export class FetchCase extends Component {
 }
 
 export class CaseData {
-    CaseId = 0;
-    CaseName = "";
+    caseId = 0;
+    caseName = "";
 }    

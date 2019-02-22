@@ -18,6 +18,7 @@ export default class App extends Component {
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/fetchcase' component={FetchCase} />
         <Route path='/addcase' component={AddCase} />
+        <Route path='/cases/edit/:empid' component={AddCase} />
       </Layout>
     );
   }
