@@ -2,12 +2,13 @@
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { CaseData } from './FetchCase';
+import { UsersData } from './FetchCase';
 
 export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, caseList: [], empData: new CaseData };
+        this.state = { title: "", loading: true, caseList: [], empData: new CaseData, usrData: new UsersData };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
@@ -76,19 +77,37 @@ export class AddCase extends Component {
     renderCreateForm(caseList) {
         return (
             <form onSubmit={this.handleSave} >
-                <div className="form-group row" >
+                <div className="form-group row " >
                     <input type="hidden" name="caseId" value={this.state.empData.caseId} />
                 </div>
-                < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Name">Case Name</label>
-                    <div className="col-md-4">
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="Name">Case Name</label>
+                    <div className="col-md-4 ">
                         <input className="form-control" type="text" name="caseName" defaultValue={this.state.empData.caseName} required />
                     </div>
                 </div >
-                <div className="form-group">
-                    <button type="submit" className="btn btn-default">Save</button>
-                    <button className="btn" onClick={this.handleCancel}>Cancel</button>
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseDescription">Description</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control input-lg" type="text" name="caseDescription" defaultValue={this.state.empData.caseDescription} required />
+                    </div>
                 </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseCreatedUser">Created by</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="text" name="caseCreatedUser" defaultValue={this.state.empData.caseCreatedUser} required />
+                    </div>
+                </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseReportedBy">Reported by</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="text" name="caseReportedBy" defaultValue={this.state.empData.caseReportedBy} required />
+                    </div>
+                </div >
+                <div className="form-group">
+                    <button type="submit" className="btn btn-success">Report case</button>
+                    <button className="btn" onClick={this.handleCancel}>Cancel</button>
+                </div>
             </form >
         );
     }

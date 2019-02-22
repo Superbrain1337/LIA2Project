@@ -24,6 +24,18 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
+        public IEnumerable<Users> GetAllUsers()
+        {
+            try
+            {
+                return db.Users.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         //To Add new employee record     
         public int AddCase(Cases cases)
@@ -57,7 +69,7 @@ namespace LIA2Project.Models.DataAccess
         }
 
 
-        //Get the details of a particular employee    
+        //Get the details of a particular case   
         public Cases GetCaseData(int id)
         {
             try
@@ -70,9 +82,22 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
+        //Get the details of a particular user
+        public Users GetUserData(int id)
+        {
+            try
+            {
+                Users tbluser = db.Users.Find(id);
+                return tbluser;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
 
-        //To Delete the record of a particular employee    
+        //To Delete the record of a particular case    
         public int DeleteCase(int id)
         {
             try

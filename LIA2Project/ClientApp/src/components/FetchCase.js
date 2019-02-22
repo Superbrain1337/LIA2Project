@@ -50,8 +50,11 @@ export class FetchCase extends Component {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>CaseId</th>
-                        <th>CaseName</th>
+                        <th>Case Id</th>
+                        <th>Case Name</th>
+                        <th>Case Description </th>
+                        <th>Created by </th>
+                        <th>Reported by </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +63,9 @@ export class FetchCase extends Component {
                             <td></td>
                             <td>{emp.caseId}</td>
                             <td>{emp.caseName}</td>
+                            <td>{emp.caseDescription}</td>
+                            <td>{emp.caseCreatedUser}</td>
+                            <td>{emp.caseReportedBy}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
                             <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
@@ -90,4 +96,10 @@ export class FetchCase extends Component {
 export class CaseData {
     caseId = 0;
     caseName = "";
+    caseDescription
+    caseCreatedUser
+    caseReportedBy
 }    
+export class UsersData {
+    UserTelephone = "";
+}
