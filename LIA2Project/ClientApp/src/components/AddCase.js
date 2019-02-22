@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+﻿import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { CaseData } from './FetchCase';
@@ -7,19 +7,19 @@ export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, cityList: [], empData: new EmployeeData };
+        this.state = { title: "", loading: true, caseList: [], empData: new CaseData };
 
-        fetch('api/Employee/GetCityList')
+        fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
-                this.setState({ cityList: data });
+                this.setState({ caseList: data });
             });
 
         var empid = this.props.match.params["empid"];
 
         // This will set state for Edit employee  
         if (empid > 0) {
-            fetch('api/Employee/Details/' + empid)
+            fetch('api/Cases/Details/' + empid)
                 .then(response => response.json())
                 .then(data => {
                     this.setState({ title: "Edit", loading: false, empData: data });
@@ -28,7 +28,7 @@ export class AddCase extends Component {
 
         // This will set state for Add employee  
         else {
-            this.state = { title: "Create", loading: false, cityList: [], empData: new EmployeeData };
+            this.state = { title: "Create", loading: false, caseList: [], empData: new CaseData };
         }
 
         // This binding is necessary to make "this" work in the callback  
@@ -42,26 +42,26 @@ export class AddCase extends Component {
         const data = new FormData(event.target);
 
         // PUT request for Edit employee.  
-        if (this.state.empData.employeeId) {
-            fetch('api/Employee/Edit', {
+        if (this.state.empData.caseId) {
+            fetch('api/Cases/Edit', {
                 method: 'PUT',
                 body: data
 
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    this.props.history.push("/fetchemployee");
+                    this.props.history.push("/fetchcase");
                 });
         }
 
         // POST request for Add employee.  
         else {
-            fetch('api/Employee/Create', {
+            fetch('api/Cases/Create', {
                 method: 'POST',
                 body: data
 
             }).then((response) => response.json())
                 .then((responseJson) => {
-                    this.props.history.push("/fetchemployee");
+                    this.props.history.push("/fetchcase");
                 });
         }
     }
@@ -69,47 +69,20 @@ export class AddCase extends Component {
     // This will handle Cancel button click event.  
     handleCancel(e) {
         e.preventDefault();
-        this.props.history.push("/fetchemployee");
+        this.props.history.push("/fetchcase");
     }
 
     // Returns the HTML Form to the render() method.  
-    renderCreateForm(cityList) {
+    renderCreateForm(caseList) {
         return (
             <form onSubmit={this.handleSave} >
                 <div className="form-group row" >
-                    <input type="hidden" name="employeeId" value={this.state.empData.employeeId} />
+                    <input type="hidden" name="caseId" value={this.state.empData.caseId} />
                 </div>
                 < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Name">Name</label>
+                    <label className=" control-label col-md-12" htmlFor="Name">Case Name</label>
                     <div className="col-md-4">
-                        <input className="form-control" type="text" name="name" defaultValue={this.state.empData.name} required />
-                    </div>
-                </div >
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="Gender">Gender</label>
-                    <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="gender" defaultValue={this.state.empData.gender} required>
-                            <option value="">-- Select Gender --</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                </div >
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="Department" >Department</label>
-                    <div className="col-md-4">
-                        <input className="form-control" type="text" name="Department" defaultValue={this.state.empData.department} required />
-                    </div>
-                </div>
-                <div className="form-group row">
-                    <label className="control-label col-md-12" htmlFor="City">City</label>
-                    <div className="col-md-4">
-                        <select className="form-control" data-val="true" name="City" defaultValue={this.state.empData.city} required>
-                            <option value="">-- Select City --</option>
-                            {cityList.map(city =>
-                                <option key={city.cityId} value={city.cityName}>{city.cityName}</option>
-                            )}
-                        </select>
+                        <input className="form-control" type="text" name="caseName" defaultValue={this.state.empData.caseName} required />
                     </div>
                 </div >
                 <div className="form-group">
@@ -123,11 +96,11 @@ export class AddCase extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCreateForm(this.state.cityList);
+            : this.renderCreateForm(this.state.caseList);
 
         return (<div>
             <h1>{this.state.title}</h1>
-            <h3>Employee</h3>
+            <h3>Case</h3>
             <hr />
             {contents}
         </div>);
