@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace LIA2Project.Models.DataAccess
 {
-    public class CasesDataAccessLayer
+    public class UserDataAccessLayer
     {
-
-
         DuoSTATIONContext db = new DuoSTATIONContext();
 
-        public IEnumerable<Cases> GetAllCases()
+        public IEnumerable<Users> GetAllUsers()
         {
             try
             {
-                return db.Cases.ToList();
+                return db.Users.ToList();
             }
             catch
             {
@@ -24,12 +22,11 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-    
-        public int AddCase(Cases cases)
+        public int AddUser(Users users)
         {
             try
             {
-                db.Cases.Add(cases);
+                db.Users.Add(users);
                 db.SaveChanges();
                 return 1;
             }
@@ -39,12 +36,12 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-   
-        public int UpdateCase(Cases tblcase)
+
+        public int UpdateUser(Users tbluser)
         {
             try
             {
-                db.Entry(tblcase).State = EntityState.Modified;
+                db.Entry(tbluser).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return 1;
@@ -55,13 +52,13 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-  
-        public Cases GetCaseData(int id)
+
+        public Users GetUserData(int id)
         {
             try
             {
-                Cases tblcase = db.Cases.Find(id);
-                return tblcase;
+                Users tbluser = db.Users.Find(id);
+                return tbluser;
             }
             catch
             {
@@ -69,13 +66,13 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-  
-        public int DeleteCase(int id)
+
+        public int DeleteUser(int id)
         {
             try
             {
-                Cases emp = db.Cases.Find(id);
-                db.Cases.Remove(emp);
+                Users emp = db.Users.Find(id);
+                db.Users.Remove(emp);
                 db.SaveChanges();
                 return 1;
             }
@@ -84,7 +81,6 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
-
 
     }
 }

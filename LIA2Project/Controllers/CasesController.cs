@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LIA2Project.Models;
 using LIA2Project.Models.DataAccess;
+using LIA2Project.Models.ViewModels;
 
 namespace LIA2Project.Controllers
 {
     public class CasesController : Controller
     {
         CasesDataAccessLayer objCase = new CasesDataAccessLayer();
+        UserDataAccessLayer objUser = new UserDataAccessLayer();
 
         [HttpGet]
         [Route("api/Cases/Index")]
@@ -47,30 +49,14 @@ namespace LIA2Project.Controllers
             return objCase.DeleteCase(id);
         }
 
-        // GET: api/<controller>
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("api/Cases/GetCreateCaseViewModel")]
+        public CreateCaseViewModel GetCreateCaseViewModel(int caseId, int userId)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
+            Cases C = objCase.GetCaseData(caseId);
+            Users U = objUser.GetUserData(userId);
+            return new CreateCaseViewModel { TheCases = C, TheUsers = U };
         }
     }
 }
