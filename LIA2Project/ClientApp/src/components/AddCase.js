@@ -7,7 +7,7 @@ export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, cityList: [], empData: new EmployeeData };
+        this.state = { title: "", loading: true, cityList: [], empData: new CaseData };
 
         fetch('api/Employee/GetCityList')
             .then(response => response.json())
