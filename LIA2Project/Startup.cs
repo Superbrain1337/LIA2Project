@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LIA2Project.Models;
+using LIA2Project.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace LIA2Project
 {
@@ -31,6 +33,11 @@ namespace LIA2Project
             });
             string cs = Configuration.GetConnectionString("The_Right_String");
             services.AddDbContext<DuoSTATIONContext>(options => options.UseSqlServer(cs));
+
+            services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<DuoSTATIONContext>().AddDefaultTokenProviders();
+
+            services.AddScoped<RoleManager<IdentityRole>>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +61,11 @@ namespace LIA2Project
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "{controller=Account}/{action=Login}/{id?}");
+
+                routes.MapSpaFallbackRoute(
+                        name: "spa-fallback",
+                        defaults: new { controller = "Home", action = "Index" });
             });
 
             app.UseSpa(spa =>
