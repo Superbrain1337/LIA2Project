@@ -23,9 +23,9 @@ namespace LIA2Project.Controllers
 
         [HttpPost]
         [Route("api/Cases/Create")]
-        public int Create(Cases cas)
+        public int Create([Bind("CaseId")]CreateCaseViewModel cas)
         {
-            return objCase.AddCase(cas);
+            return objCase.AddCase(cas.TheCases);
         }
 
         [HttpGet]
