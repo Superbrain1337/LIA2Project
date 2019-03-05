@@ -9,8 +9,7 @@ namespace LIA2Project.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -18,5 +17,7 @@ namespace LIA2Project.Models.AccountViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public bool lockoutOnFailure { get; set; }
     }
 }
