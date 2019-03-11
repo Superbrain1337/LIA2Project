@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LIA2Project.Migrations
 {
     [DbContext(typeof(DuoSTATIONContext))]
-    [Migration("20190305122819_initial")]
-    partial class initial
+    [Migration("20190305140947_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2459,6 +2459,8 @@ namespace LIA2Project.Migrations
 
                     b.Property<string>("NormalizedUserName");
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
@@ -2475,7 +2477,7 @@ namespace LIA2Project.Migrations
 
                     b.Property<bool?>("UserAdministrator");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("UserAuthPassword")
                         .HasMaxLength(50)
                         .IsUnicode(false);
 

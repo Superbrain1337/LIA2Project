@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LIA2Project.Migrations
 {
     [DbContext(typeof(DuoSTATIONContext))]
-    [Migration("20190305125806_test")]
-    partial class test
+    [Migration("20190305140037_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

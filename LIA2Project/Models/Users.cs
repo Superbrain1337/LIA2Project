@@ -42,5 +42,7 @@ namespace LIA2Project.Models
         public bool? UserExportMdm { get; set; }
         public string UserPersonalId { get; set; }
         public string UserCompany { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

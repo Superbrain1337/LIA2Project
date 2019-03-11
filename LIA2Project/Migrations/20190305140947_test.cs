@@ -6,18 +6,17 @@ namespace LIA2Project.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            migrationBuilder.AddColumn<string>(
                 name: "Password",
                 table: "Users",
-                newName: "UserAuthPassword");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "UserAuthPassword",
-                table: "Users",
-                newName: "Password");
+            migrationBuilder.DropColumn(
+                name: "Password",
+                table: "Users");
         }
     }
 }

@@ -17,7 +17,6 @@ namespace LIA2Project.Models.AccountViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-
-        public bool lockoutOnFailure { get; set; }
+        
     }
 }
