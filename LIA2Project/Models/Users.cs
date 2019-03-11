@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LIA2Project.Models
 {
-    public partial class Users : IdentityUser
+    public partial class Users
     {
         public Guid UserId { get; set; }
         public string UserGroupName { get; set; }

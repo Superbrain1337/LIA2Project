@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LIA2Project.Models
 {
-    public partial class DuoSTATIONContext : DbContext
+    public partial class DuoSTATIONContext : IdentityDbContext<User>
     {
         public DuoSTATIONContext()
         {
@@ -15,6 +17,7 @@ namespace LIA2Project.Models
             : base(options)
         {
         }
+
 
         public virtual DbSet<Actions> Actions { get; set; }
         public virtual DbSet<AHistory> AHistory { get; set; }
@@ -65,7 +68,7 @@ namespace LIA2Project.Models
         public virtual DbSet<SysInfo> SysInfo { get; set; }
         public virtual DbSet<System> System { get; set; }
         public virtual DbSet<Updates> Updates { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<VmGuestAdapters> VmGuestAdapters { get; set; }
         public virtual DbSet<VmGuests> VmGuests { get; set; }
 
@@ -80,6 +83,7 @@ namespace LIA2Project.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Actions>(entity =>
             {
                 entity.HasKey(e => e.ActionId);

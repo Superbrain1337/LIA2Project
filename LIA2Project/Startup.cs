@@ -34,7 +34,7 @@ namespace LIA2Project
             string cs = Configuration.GetConnectionString("The_Right_String");
             services.AddDbContext<DuoSTATIONContext>(options => options.UseSqlServer(cs));
 
-            services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<DuoSTATIONContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DuoSTATIONContext>().AddDefaultTokenProviders();
 
             services.AddScoped<RoleManager<IdentityRole>>();
 

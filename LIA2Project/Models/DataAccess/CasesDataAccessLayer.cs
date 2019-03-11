@@ -24,11 +24,11 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-        public IEnumerable<Users> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             try
             {
-                return db.Users.ToList();
+                return db.User.ToList();
             }
             catch
             {
@@ -83,11 +83,11 @@ namespace LIA2Project.Models.DataAccess
             }
         }
         //Get the details of a particular user
-        public Users GetUserData(int id)
+        public User GetUserData(int id)
         {
             try
             {
-                Users tbluser = db.Users.Find(id);
+                User tbluser = db.User.Find(id);
                 return tbluser;
             }
             catch
