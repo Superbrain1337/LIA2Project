@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RouteComponentProps } from 'react-router';
 
 
 export class Home extends Component {
@@ -14,7 +15,7 @@ export class Home extends Component {
                 <p> To logon to this service, you must be a customer and been assigned an account and password. </p>
                 <hr />
                 <h2>My most recent cases</h2>
-                <p>You must log in to see the cases</p>
+                <p></p>
                 <hr />
                 <h2>Information</h2>
             </div>

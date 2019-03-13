@@ -65,7 +65,7 @@ namespace LIA2Project
 
                 routes.MapSpaFallbackRoute(
                         name: "spa-fallback",
-                        defaults: new { controller = "Home", action = "Index" });
+                        defaults: new { controller = "", action = "Index" });
             });
 
             app.UseSpa(spa =>

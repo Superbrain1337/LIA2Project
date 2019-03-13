@@ -421,11 +421,11 @@ namespace LIA2Project.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "");
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "");
             }
         }
 
