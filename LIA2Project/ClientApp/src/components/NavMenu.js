@@ -4,8 +4,7 @@ import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
-let userName = document.getElementById('react-app').textContent;
-console.log('userName: ' + userName);
+
 export class NavMenu extends Component {
     displayName = NavMenu.name
     
@@ -41,9 +40,7 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Fetch case
               </NavItem>
                     </LinkContainer>
-                    <div className="login">
-                        Login: {userName}
-                    </div>
+                    
           </Nav>
         </Navbar.Collapse>
       </Navbar>
