@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using LIA2Project.Models;
 using LIA2Project.Models.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using System.DirectoryServices;
 
 namespace LIA2Project.Controllers
 {
@@ -21,12 +21,19 @@ namespace LIA2Project.Controllers
 
         [HttpGet]
         [Route("api/Users/Login")]
-        public bool Login([Bind("UserId")]Users usr)
+        public bool Login(Guid id, string userName, string password, string email)
         {
-            var UserList = objUser.GetAllUsers();
-            if (UserList.Contains(usr))
+            var thisUser = objUser.GetUserDataById(id);
+            if(thisUser == null && userName != "")
             {
-                return true;
+                thisUser = objUser.GetUserDataByName(userName);
+            }
+            if (thisUser != null)
+            {
+                if (AuthenticateAD(thisUser.UserGroupName, thisUser.UserLoginName, thisUser.UserAuthPassword) == true)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -40,23 +47,50 @@ namespace LIA2Project.Controllers
 
         [HttpGet]
         [Route("api/Users/Details/{id}")]
-        public Users Details(int id)
+        public Users Details(Guid id)
         {
-            return objUser.GetUserData(id);
+            return objUser.GetUserDataById(id);
         }
 
         [HttpPut]
-        [Route("api/Cases/Edit")]
+        [Route("api/Users/Edit")]
         public int Edit(Users usr)
         {
             return objUser.UpdateUser(usr);
         }
 
         [HttpDelete]
-        [Route("api/Cases/Delete/{id}")]
+        [Route("api/Users/Delete/{id}")]
         public int Delete(int id)
         {
             return objUser.DeleteUser(id);
+        }
+
+        [HttpGet]
+        [Route("api/Users/AuthenticateAD")]
+        private bool AuthenticateAD(string userGroupName, string userLoginName, string Password)
+        {
+            try
+            {
+                // Kolla om det finns ett entry som pekar vart autentisering ska ske
+                //NameValueCollection ldapSettings = (NameValueCollection)ConfigurationManager.GetSection("DuoSTATIONSettings/ldapSettings");
+                //string ldapHost = ldapSettings[userGroupName];
+                //if (string.IsNullOrEmpty(ldapHost))
+                string ldapHost = userGroupName;
+
+                DirectoryEntry entry = new DirectoryEntry("LDAP://" + ldapHost)
+                {
+                    Username = userGroupName + "\\" + userLoginName,
+                    Password = Password
+                };
+                object obj = entry.NativeObject;
+                entry.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

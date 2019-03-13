@@ -62,7 +62,7 @@ export class FetchCase extends Component {
                             <td>{emp.caseName}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
-                            <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
+                                <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
                             </td>
                         </tr>)
                     )}
@@ -79,6 +79,7 @@ export class FetchCase extends Component {
         return (<div>
             <h1>Case Data</h1>
             <p>This component demonstrates fetching Case data from the server.</p>
+            <p>The logged in user is --- {this.props.loggedInUser} ---</p>
             <p>
                 <Link to="/addcase">Create New</Link>
             </p>

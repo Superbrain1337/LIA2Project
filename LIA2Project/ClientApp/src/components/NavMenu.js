@@ -38,6 +38,11 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='th-list' /> Fetch case
                             </NavItem>
                         </LinkContainer>
+                        <LinkContainer to={'/userLogin'}>
+                            <NavItem>
+                                <Glyphicon glyph='th-list' /> Login User
+                            </NavItem>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

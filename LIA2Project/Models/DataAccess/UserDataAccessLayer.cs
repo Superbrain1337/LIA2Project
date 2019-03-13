@@ -53,11 +53,24 @@ namespace LIA2Project.Models.DataAccess
         }
 
 
-        public Users GetUserData(int id)
+        public Users GetUserDataById(Guid id)
         {
             try
             {
                 Users tbluser = db.Users.Find(id);
+                return tbluser;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public Users GetUserDataByName(string name)
+        {
+            try
+            {
+                Users tbluser = db.Users.SingleOrDefault(U => U.UserLoginName == name);
                 return tbluser;
             }
             catch

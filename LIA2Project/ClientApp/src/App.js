@@ -10,6 +10,17 @@ import { UserLogin } from './components/UserLogin';
 
 export default class App extends Component {
     displayName = App.name
+    constructor() {
+        super();
+        this.state = { loggedInUser: '' };
+    }
+
+    OnLogin(username) {
+        this.setState({
+            loggedInUser: username
+        });
+        console.log("OnLogin called with username = " + username);
+    }
 
     render() {
         return (
@@ -20,7 +31,7 @@ export default class App extends Component {
                 <Route path='/fetchcase' component={FetchCase} />
                 <Route path='/addcase' component={AddCase} />
                 <Route path='/cases/edit/:caseId' component={AddCase} />
-                <Route path='/UserLogin' component={UserLogin} />
+                <Route path='/userLogin' component={UserLogin} />
             </Layout>
         );
     }

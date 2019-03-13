@@ -52,10 +52,10 @@ namespace LIA2Project.Controllers
 
         [HttpGet]
         [Route("api/Cases/GetCreateCaseViewModel")]
-        public CreateCaseViewModel GetCreateCaseViewModel(int caseId, int userId)
+        public CreateCaseViewModel GetCreateCaseViewModel(int caseId, Guid userId)
         {
             Cases C = objCase.GetCaseData(caseId);
-            Users U = objUser.GetUserData(userId);
+            Users U = objUser.GetUserDataById(userId);
             return new CreateCaseViewModel { TheCases = C, TheUsers = U };
         }
     }
