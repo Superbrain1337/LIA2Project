@@ -62,6 +62,7 @@ namespace LIA2Project
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Account}/{action=Login}/{id?}");
+                    //template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapSpaFallbackRoute(
                         name: "spa-fallback",

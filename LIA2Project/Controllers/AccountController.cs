@@ -39,7 +39,7 @@ namespace LIA2Project.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = "Home")
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -421,7 +421,7 @@ namespace LIA2Project.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
             {
-                return Redirect(returnUrl);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             else
             {

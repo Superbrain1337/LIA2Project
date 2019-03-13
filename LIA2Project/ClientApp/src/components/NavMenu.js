@@ -1,11 +1,14 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
+let userName = document.getElementById('react-app').textContent;
+console.log('userName: ' + userName);
 export class NavMenu extends Component {
-  displayName = NavMenu.name
+    displayName = NavMenu.name
+    
 
   render() {
     return (
@@ -37,7 +40,10 @@ export class NavMenu extends Component {
               <NavItem>
                 <Glyphicon glyph='th-list' /> Fetch case
               </NavItem>
-            </LinkContainer>
+                    </LinkContainer>
+                    <div className="login">
+                        Login: {userName}
+                    </div>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
