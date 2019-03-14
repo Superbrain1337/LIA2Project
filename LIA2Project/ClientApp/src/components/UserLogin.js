@@ -30,14 +30,26 @@ export class UserLogin extends Component {
         this.handleCancel = this.handleCancel.bind(this);
     }
 
-    // This will handle the submit form event.  
+     
+    
+
+    componentDidMount() {
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            this.props.history.push("/fetchcase");
+        }
+    }
+
+    // This will handle the submit form event. 
     handleSave(id, username, password, email) {
         //event.preventDefault();
         //const data = new FormData(event.target);
-
+        this.setState({
+            loading: true
+        });
         fetch('api/Users/Login?id=' + id + '&userName=' + username + '&password=' + password + '&email=' + email)
-            .then((response) => response.json())
-            .then((responseJson) => {
+            .then(response => response.json())
+            .then(responseJson => {
+                console.log("Got to the login with the response: " + responseJson);
                 if (responseJson === true) {
                     let U = new UserData({ userID: id, userName: username, email: email });
                     console.log("User " + U.userName + " is logging in");
@@ -46,11 +58,14 @@ export class UserLogin extends Component {
                         loggedIn: true
                     });
                     console.log("User " + U.userName + " logged in succesfully");
-                    sessionStorage.setItem("loggedIn", true);
+                    sessionStorage.setItem("loggedIn", 'true');
                     sessionStorage.setItem("userName", username);
                     sessionStorage.setItem("userEmail", email);
                 }
-                //this.props.history.push("/fetchcase");
+                this.setState({
+                    loading: false
+                });
+                this.props.history.push("/fetchcase");
             });
 
     }
@@ -102,23 +117,21 @@ export class UserLogin extends Component {
             ? <p><em>Loading...</em></p>
             : this.renderLoginForm(this.state.userList);
 
-        if (sessionStorage.getItem('loggedIn') === true) {
-            this.history.push("/fetchcase");
-        }
-        else {
-            return (<div>
+        
+            return (<div hidden={this.state.loggedIn}>
                 <h1>{this.state.title}</h1>
                 <h3>User</h3>
                 <hr />
                 {contents}
             </div>);
-        }
 
     }
+
+    
 }
 
 export class UserData {
-    userID = 5;
+    userID = 0;
     userName = "";
     password = "";
     groupName = "";
