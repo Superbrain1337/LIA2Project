@@ -36,6 +36,18 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
+        public IEnumerable<CaseDevices> GetAllDevices()
+        {
+            try
+            {
+                return db.CaseDevices.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         //To Add new employee record     
         public int AddCase(Cases cases)
@@ -67,6 +79,22 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
+        //To Update the records of a particluar device    
+        public int UpdateDevice(CaseDevices tbldevice)
+        {
+            try
+            {
+                db.Entry(tbldevice).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
 
         //Get the details of a particular case   
@@ -89,6 +117,19 @@ namespace LIA2Project.Models.DataAccess
             {
                 Users tbluser = db.Users.Find(id);
                 return tbluser;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        //Get the details of a particular device   
+        public CaseDevices GetDeviceData(int id)
+        {
+            try
+            {
+                CaseDevices tblcasedevice = db.CaseDevices.Find(id);
+                return tblcasedevice;
             }
             catch
             {

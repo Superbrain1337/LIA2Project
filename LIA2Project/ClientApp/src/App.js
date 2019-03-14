@@ -6,20 +6,22 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { FetchCase } from './components/FetchCase';
 import { AddCase } from './components/AddCase';
+import { FetchDevice } from './components/FetchDevice';
 
 export default class App extends Component {
-  displayName = App.name
+    displayName = App.name
 
-  render() {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetchdata' component={FetchData} />
-        <Route path='/fetchcase' component={FetchCase} />
-        <Route path='/addcase' component={AddCase} />
-        <Route path='/cases/edit/:empid' component={AddCase} />
-      </Layout>
-    );
-  }
+    render() {
+        return (
+            <Layout>
+                <Route exact path='/' component={Home} />
+                <Route path='/counter' component={Counter} />
+                <Route path='/fetchdata' component={FetchData} />
+                <Route path='/fetchcase' component={FetchCase} />
+                <Route path='/addcase' component={AddCase} />
+                <Route path='/cases/edit/:empid' component={AddCase} />
+                <Route path='/fetchdevice' component={FetchDevice} />
+            </Layout>
+        );
+    }
 }
