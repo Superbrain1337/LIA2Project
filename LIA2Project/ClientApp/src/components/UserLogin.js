@@ -9,7 +9,6 @@ export class UserLogin extends Component {
         this.state = { title: "", loading: true, userList: [], userData: new UserData, loggedIn: false };
 
 
-
         var userId = this.props.match.params["userId"];
 
         // This will set state for Edit user  
@@ -47,10 +46,11 @@ export class UserLogin extends Component {
                         loggedIn: true
                     });
                     console.log("User " + U.userName + " logged in succesfully");
-                    this.props.OnLogin(U.userName);
-                    
+                    sessionStorage.setItem("loggedIn", true);
+                    sessionStorage.setItem("userName", username);
+                    sessionStorage.setItem("userEmail", email);
                 }
-                this.props.history.push("/fetchcase");
+                //this.props.history.push("/fetchcase");
             });
 
     }
@@ -62,43 +62,39 @@ export class UserLogin extends Component {
 
     renderLoginForm(userList) {
         console.log("renderLoginForm with userlist = " + userList);
-        if (this.state.loggedIn === true) {
-            this.history.push("/fetchcase");
-        }
-        else {
-            return (
-                <form>
-                    <div className="form-group row" >
-                        <input type="hidden" name="userId" id="userId" value={this.state.userData.userID} />
-                    </div>
-                    < div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Name">UserName</label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="text" name="userName" id="userName" defaultValue={this.state.userData.userName} required />
-                        </div>
-                    </div >
-                    < div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Password">Password</label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="password" name="password" id="password" defaultValue={this.state.userData.userName} required />
-                        </div>
-                    </div >
-                    < div className="form-group row" >
-                        <label className=" control-label col-md-12" htmlFor="Email">Email</label>
-                        <div className="col-md-4">
-                            <input className="form-control" type="text" name="email" id="email" defaultValue={this.state.userData.email} required />
-                        </div>
-                    </div >
 
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-default" onClick={() => this.handleSave(document.getElementById("userId").value, document.getElementById("userName").value, document.getElementById("password").value, document.getElementById("email").value)}>Login</button>
-                        <button className="btn" onClick={this.handleCancel}>Cancel</button>
-                    </div >
-                </form >
-            );
-        }
-        
-        
+        return (
+            <form>
+                <div className="form-group row" >
+                    <input type="hidden" name="userId" id="userId" value={this.state.userData.userID} />
+                </div>
+                < div className="form-group row" >
+                    <label className=" control-label col-md-12" htmlFor="Name">UserName</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="text" name="userName" id="userName" defaultValue={this.state.userData.userName} required />
+                    </div>
+                </div >
+                < div className="form-group row" >
+                    <label className=" control-label col-md-12" htmlFor="Password">Password</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="password" name="password" id="password" defaultValue={this.state.userData.userName} required />
+                    </div>
+                </div >
+                < div className="form-group row" >
+                    <label className=" control-label col-md-12" htmlFor="Email">Email</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="text" name="email" id="email" defaultValue={this.state.userData.email} required />
+                    </div>
+                </div >
+
+                <div className="form-group">
+                    <button type="submit" className="btn btn-default" onClick={() => this.handleSave(document.getElementById("userId").value, document.getElementById("userName").value, document.getElementById("password").value, document.getElementById("email").value)}>Login</button>
+                    <button className="btn" onClick={this.handleCancel}>Cancel</button>
+                </div >
+            </form >
+        );
+
+
     }
 
     render() {
@@ -106,12 +102,18 @@ export class UserLogin extends Component {
             ? <p><em>Loading...</em></p>
             : this.renderLoginForm(this.state.userList);
 
-        return (<div>
-            <h1>{this.state.title}</h1>
-            <h3>User</h3>
-            <hr />
-            {contents}
-        </div>);
+        if (sessionStorage.getItem('loggedIn') === true) {
+            this.history.push("/fetchcase");
+        }
+        else {
+            return (<div>
+                <h1>{this.state.title}</h1>
+                <h3>User</h3>
+                <hr />
+                {contents}
+            </div>);
+        }
+
     }
 }
 

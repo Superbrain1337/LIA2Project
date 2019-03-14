@@ -1,6 +1,7 @@
 ﻿import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
+import { UserData } from './UserLogin';
 
 
 export class FetchCase extends Component {
@@ -45,11 +46,12 @@ export class FetchCase extends Component {
 
     // Returns the HTML table to the render() method.  
     renderCaseTable(caseList) {
+        let username = sessionStorage.getItem('userName');
         return (
             <table className='table'>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>The logged in user is --- {username} ---</th>
                         <th>CaseId</th>
                         <th>CaseName</th>
                     </tr>
@@ -76,15 +78,25 @@ export class FetchCase extends Component {
             ? <p><em>Loading...</em></p>
             : this.renderCaseTable(this.state.caseList);
 
-        return (<div>
-            <h1>Case Data</h1>
-            <p>This component demonstrates fetching Case data from the server.</p>
-            <p>The logged in user is --- {this.props.loggedInUser} ---</p>
-            <p>
-                <Link to="/addcase">Create New</Link>
-            </p>
-            {contents}
-        </div>);
+        if (sessionStorage.getItem('loggedIn') !== true) {
+            this.props.history.push("/userlogin");
+            return (<div>
+                <p>
+                    <Link to="/userlogin">To login</Link>
+                </p>
+            </div>);
+        }
+        else {
+            return (<div>
+                <h1>Case Data</h1>
+                <p>This component demonstrates fetching Case data from the server.</p>
+                <p>
+                    <Link to="/addcase">Create New</Link>
+                </p>
+                {contents}
+            </div>);
+        }
+        
     }
 }
 
