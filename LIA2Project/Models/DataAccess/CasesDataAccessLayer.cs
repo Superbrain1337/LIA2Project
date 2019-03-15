@@ -48,6 +48,18 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
+        public IEnumerable<CaseContacts> GetAllCaseContacts()
+        {
+            try
+            {
+                return db.CaseContacts.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         //To Add new employee record     
         public int AddCase(Cases cases)
@@ -130,6 +142,19 @@ namespace LIA2Project.Models.DataAccess
             {
                 CaseDevices tblcasedevice = db.CaseDevices.Find(id);
                 return tblcasedevice;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        //Get the details of a particular device
+        public CaseContacts GetCaseContactsData(int id)
+        {
+            try
+            {
+                CaseContacts tblcasecontacts = db.CaseContacts.Find(id);
+                return tblcasecontacts;
             }
             catch
             {
