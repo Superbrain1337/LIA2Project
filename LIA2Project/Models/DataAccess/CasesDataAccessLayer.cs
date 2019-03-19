@@ -60,7 +60,6 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-
         //To Add new employee record     
         public int AddCase(Cases cases)
         {
@@ -123,7 +122,7 @@ namespace LIA2Project.Models.DataAccess
             }
         }
         //Get the details of a particular user
-        public Users GetUserData(int id)
+        public Users GetUsersData(int id)
         {
             try
             {
