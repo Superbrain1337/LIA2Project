@@ -54,13 +54,13 @@ export class FetchCase extends Component {
     renderCaseTable(caseList) {
 
         console.log("renderCaseTable");
-        let username = sessionStorage.getItem('userName');
+        
 
         return (
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>The logged in user is --- {username} ---</th>
+                        <th></th>
                         <th>CaseId</th>
                         <th>CaseName</th>
                     </tr>
@@ -87,9 +87,12 @@ export class FetchCase extends Component {
             ? <p><em>Loading...</em></p>
             : this.renderCaseTable(this.state.caseList);
 
+        let username = sessionStorage.getItem('userName');
+
         return (<div>
             <h1>Case Data</h1>
             <p>This component demonstrates fetching Case data from the server.</p>
+            <p>The logged in user is --- {username} ---</p>
             <p>
                 <Link to="/addcase">Create New</Link>
             </p>

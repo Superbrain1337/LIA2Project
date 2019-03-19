@@ -5,6 +5,8 @@ using LIA2Project.Models;
 using LIA2Project.Models.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using System.DirectoryServices;
+using System.Net.Mail;
+using System.Net;
 
 namespace LIA2Project.Controllers
 {
@@ -88,6 +90,40 @@ namespace LIA2Project.Controllers
                 return true;
             }
             catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Users/SendMail")]
+        public bool SendMail(string message, string userMail, string password)
+        {
+            try
+            {
+                string sender = "samuel@programduon.se";
+                string reciever = "knut@programduon.se";
+                var smtp = new SmtpClient
+                {
+                    Host = sender,
+                    Port = 50115,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("sg", "Teddy294" )
+                };
+
+                var mess = new MailMessage(sender, reciever)
+                {
+                    Subject = "Helpdesk ProgramduonAB",
+                    Body = message
+                };
+
+                smtp.Send(mess);
+
+                return true;
+            }
+            catch
             {
                 return false;
             }

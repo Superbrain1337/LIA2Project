@@ -51,6 +51,12 @@ export class AddCase extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
+        fetch('api/Users/SendMail?message=Hejsan&userMail=a&password=b')
+            .then(response => response.json())
+            .then(jsonResult => {
+                console.log("Mail skickades: " + jsonResult);
+            });
+
         // PUT request for Edit case.  
         if (this.state.caseData.caseId) {
             fetch('api/Cases/Edit', {
