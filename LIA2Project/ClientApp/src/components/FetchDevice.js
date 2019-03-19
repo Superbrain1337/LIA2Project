@@ -6,12 +6,12 @@ import React, { Component } from 'react';
 export class FetchDevice extends Component {
     constructor(props) {
         super(props);
-        this.state = { empList: [], cscList: [], loading: true };
+        this.state = { devList: [], cscList: [], loading: true };
 
         fetch('api/Devices/Index')
             .then(response => response.json())
             .then(data => {
-                this.setState({ empList: data, loading: false });
+                this.setState({ devList: data, loading: false });
             });
 
         fetch('api/Casecontacts/Index')
@@ -27,7 +27,13 @@ export class FetchDevice extends Component {
         this.props.history.push("/devices/edit/" + id);
     }
 
-    renderCaseDeviceTable(empList, cscList) {
+    handleRedirect(redirect, id) {
+        if (redirect === "Inventory") {
+            this.props.history.push("/inventory/" + id);
+        }
+    }
+
+    renderCaseDeviceTable(devList, cscList) {
         return (
             <table className='table'>
                 <thead>
@@ -40,17 +46,12 @@ export class FetchDevice extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {empList.map(emp =>
-                        (<tr key={emp.caseId}>
-                            <td>{emp.caseDeviceId}</td>
-                            <td>{emp.caseId}</td>
-                            <td>{emp.caseDeviceGroup}</td>
-                            <td>{emp.caseDeviceName}</td>
-                            {cscList.map(csc =>
-                                (
-                                    <td>{csc.caseContactGroup}</td>
-                                )
-                            )}
+                    {devList.map(dev =>
+                        (<tr key={dev.caseDeviceId}>
+                            <td>{dev.caseDeviceId}</td>
+                            <td>{dev.caseId}</td>
+                            <td>{dev.caseDeviceGroup}</td>
+                            <td onClick={() => this.handleRedirect("Inventory", dev.caseDeviceInventoryId)}>{dev.caseDeviceName}</td>
                         </tr>)
                     )}
                     
@@ -62,7 +63,7 @@ export class FetchDevice extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCaseDeviceTable(this.state.empList, this.state.cscList);
+            : this.renderCaseDeviceTable(this.state.devList, this.state.cscList);
 
         return (<div>
             <h1>Device Data</h1>
@@ -77,6 +78,7 @@ export class DeviceData {
     CaseId = 0;
     CaseDeviceGroup
     CaseDeviceName = "";
+    caseDeviceInventoryId
 }
 export class UsersData {
     UserTelephone = "";

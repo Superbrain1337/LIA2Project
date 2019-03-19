@@ -10,27 +10,27 @@ namespace LIA2Project.Controllers
 {
     public class DevicesController : Controller
     {
-        CasesDataAccessLayer objCase = new CasesDataAccessLayer();
+        DevicesDataAccessLayer objDev = new DevicesDataAccessLayer();
 
         [HttpGet]
         [Route("api/Devices/Index")]
         public IEnumerable<CaseDevices> Index()
         {
-            return objCase.GetAllDevices();
+            return objDev.GetAllDevices();
         }
 
         [HttpGet]
         [Route("api/Devices/Details/{id}")]
         public CaseDevices Details(int id)
         {
-            return objCase.GetDeviceData(id);
+            return objDev.GetDeviceData(id);
         }
 
         [HttpPut]
         [Route("api/Devices/Edit")]
         public int Edit(CaseDevices dev)
         {
-            return objCase.UpdateDevice(dev);
+            return objDev.UpdateDevice(dev);
         }
 
         // GET: api/<controller>
