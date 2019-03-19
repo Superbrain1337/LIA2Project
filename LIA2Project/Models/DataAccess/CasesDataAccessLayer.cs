@@ -24,7 +24,43 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-    
+        public IEnumerable<Users> GetAllUsers()
+        {
+            try
+            {
+                return db.Users.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<CaseDevices> GetAllDevices()
+        {
+            try
+            {
+                return db.CaseDevices.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<CaseContacts> GetAllCaseContacts()
+        {
+            try
+            {
+                return db.CaseContacts.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //To Add new employee record     
         public int AddCase(Cases cases)
         {
             try
@@ -39,7 +75,7 @@ namespace LIA2Project.Models.DataAccess
             }
         }
 
-   
+        //To Update the records of a particluar employee    
         public int UpdateCase(Cases tblcase)
         {
             try
@@ -54,8 +90,25 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
+        //To Update the records of a particluar device    
+        public int UpdateDevice(CaseDevices tbldevice)
+        {
+            try
+            {
+                db.Entry(tbldevice).State = EntityState.Modified;
+                db.SaveChanges();
 
-  
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+        //Get the details of a particular case   
         public Cases GetCaseData(int id)
         {
             try
@@ -68,8 +121,48 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
+        //Get the details of a particular user
+        public Users GetUsersData(int id)
+        {
+            try
+            {
+                Users tbluser = db.Users.Find(id);
+                return tbluser;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        //Get the details of a particular device   
+        public CaseDevices GetDeviceData(int id)
+        {
+            try
+            {
+                CaseDevices tblcasedevice = db.CaseDevices.Find(id);
+                return tblcasedevice;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        //Get the details of a particular device
+        public CaseContacts GetCaseContactsData(int id)
+        {
+            try
+            {
+                CaseContacts tblcasecontacts = db.CaseContacts.Find(id);
+                return tblcasecontacts;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-  
+
+        //To Delete the record of a particular case    
         public int DeleteCase(int id)
         {
             try
