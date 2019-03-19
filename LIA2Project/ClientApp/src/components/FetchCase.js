@@ -7,18 +7,12 @@ import { UserData } from './UserLogin';
 export class FetchCase extends Component {
     constructor(props) {
         super(props);
-        this.state = { caseList: [], usrList: [], loading: true };
+        this.state = { caseList: [], loading: true };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
                 this.setState({ caseList: data, loading: false });
-            });
-
-        fetch('api/Users/Index')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ usrList: data, loading: false });
             });
         // This binding is necessary to make "this" work in the callback  
         this.handleDelete = this.handleDelete.bind(this);
@@ -56,10 +50,10 @@ export class FetchCase extends Component {
     }
 
     // Returns the HTML table to the render() method.  
-    renderCaseTable(caseList, usrList) {
+    renderCaseTable(caseList) {
 
         console.log("renderCaseTable");
-        
+
 
         return (
             <table className='table'>
@@ -71,7 +65,6 @@ export class FetchCase extends Component {
                         <th>Case Description </th>
                         <th>Created by </th>
                         <th>Reported by </th>
-                        <th>Telephone</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,17 +76,12 @@ export class FetchCase extends Component {
                             <td>{emp.caseDescription}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
-                            {usrList.map(usr =>
-                                (
-                                    <td>{usr.userTelephone}</td>
-                                )
-                            )}
                             <td>
-                                <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
+                                <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a> |
                                 <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
                             </td>
-                        </tr>)
-                    )}
+
+                        </tr>))}
                 </tbody>
             </table>
         );
@@ -125,7 +113,7 @@ export class CaseData {
     caseDescription
     caseCreatedUser
     caseReportedBy
-}    
+}
 export class UsersData {
     UserLoginName = "";
     UserTelephone = "";
