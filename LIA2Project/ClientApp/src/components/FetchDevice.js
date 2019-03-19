@@ -58,14 +58,9 @@ export class FetchDevice extends Component {
                                     <td>{csc.caseContactGroup}</td>
                                 )
                             )}
-                            {casList.map(cas =>
-                                (
-                                    <td>{cas.caseName   }</td>
-                                )
-                            )}
                         </tr>)
                     )}
-                    
+                
                 </tbody>
             </table>
         );

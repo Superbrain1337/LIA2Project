@@ -55,7 +55,7 @@ export class FetchCase extends Component {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Case Id</th>
+                        <th>Case Id Å Ä Ö</th>
                         <th>Case Name</th>
                         <th>Case Description </th>
                         <th>Created by </th>
@@ -72,11 +72,11 @@ export class FetchCase extends Component {
                             <td>{emp.caseDescription}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
-                            {usrList.map(usr =>
+                            <td> {usrList.map(usr =>
                                 (
                                     <td>{usr.userTelephone}</td>
                                 )
-                            )}
+                            )}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
                             <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
@@ -94,7 +94,7 @@ export class FetchCase extends Component {
             : this.renderCaseTable(this.state.empList, this.state.usrList);
 
         return (<div>
-            <h1>Case Data</h1>
+            <h1>Case Data Å Ä Ö</h1>
             <p>This component demonstrates fetching Case data from the server.</p>
             <p>
                 <Link to="/addcase">Create New</Link>
