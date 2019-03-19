@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 export class FetchDevice extends Component {
     constructor(props) {
         super(props);
-        this.state = { empList: [], cscList: [], loading: true };
+        this.state = { empList: [], cscList: [], casList: [], loading: true };
 
         fetch('api/Devices/Index')
             .then(response => response.json())
@@ -20,6 +20,12 @@ export class FetchDevice extends Component {
                 this.setState({ cscList: data, loading: false });
             });
 
+        fetch('api/Cases/Index')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ casList: data, loading: false });
+            });
+
 
     }
 
@@ -27,7 +33,7 @@ export class FetchDevice extends Component {
         this.props.history.push("/devices/edit/" + id);
     }
 
-    renderCaseDeviceTable(empList, cscList) {
+    renderCaseDeviceTable(empList, cscList, casList) {
         return (
             <table className='table'>
                 <thead>
@@ -37,6 +43,7 @@ export class FetchDevice extends Component {
                         <th>Group/Domain</th>
                         <th>Name</th>
                         <th>Name</th>
+                        <th>Case Name</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +58,11 @@ export class FetchDevice extends Component {
                                     <td>{csc.caseContactGroup}</td>
                                 )
                             )}
+                            {casList.map(cas =>
+                                (
+                                    <td>{cas.caseName   }</td>
+                                )
+                            )}
                         </tr>)
                     )}
                     
@@ -62,7 +74,7 @@ export class FetchDevice extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCaseDeviceTable(this.state.empList, this.state.cscList);
+            : this.renderCaseDeviceTable(this.state.empList, this.state.cscList, this.state.casList);
 
         return (<div>
             <h1>Device Data</h1>
@@ -87,4 +99,11 @@ export class CaseContacts {
     CaseContactNotify = true;
     CaseContactName = "";
     CaseContactGroup = "";
+}
+export class CaseData {
+    caseId = 0;
+    caseName = "";
+    caseDescription
+    caseCreatedUser
+    caseReportedBy
 }
