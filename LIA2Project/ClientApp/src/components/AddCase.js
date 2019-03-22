@@ -4,9 +4,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { CaseData } from './FetchCase';
 import { UsersData } from './FetchCase';
 
+
 export class AddCase extends Component {
     constructor(props) {
         super(props);
+        
+        
 
         this.state = { title: "", loading: true, caseList: [], userList: [], empData: new CaseData, usrData: new UsersData };
 
@@ -41,6 +44,8 @@ export class AddCase extends Component {
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
+
+    
 
     // This will handle the submit form event.  
     handleSave(event) {
@@ -133,6 +138,7 @@ export class AddCase extends Component {
             <h3>Case</h3>
             <hr />
             {contents}
+
         </div>);
     }
 }  
