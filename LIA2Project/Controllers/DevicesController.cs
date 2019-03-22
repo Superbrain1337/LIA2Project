@@ -33,6 +33,13 @@ namespace LIA2Project.Controllers
             return objDev.UpdateDevice(dev);
         }
 
+        [HttpGet]
+        [Route("api/Inventory/{id}")]
+        public Inventory GetDeviceInventory(Guid id)
+        {
+            return objDev.GetDeviceInventory(id);
+        }
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()

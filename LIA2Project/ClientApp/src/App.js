@@ -6,6 +6,7 @@ import { FetchCase } from './components/FetchCase';
 import { AddCase } from './components/AddCase';
 import { FetchDevice } from './components/FetchDevice';
 import { UserLogin } from './components/UserLogin';
+import { DeviceInventory } from './components/DeviceInventory';
 
 export default class App extends Component {
     displayName = App.name
@@ -19,6 +20,7 @@ export default class App extends Component {
                 <Route path='/cases/edit/:caseId' component={AddCase} />
                 <Route path='/userlogin' component={UserLogin} /> 
                 <Route path='/fetchdevice' component={FetchDevice} />
+                <Route path='/inventory/:inventoryId' component={DeviceInventory} />
             </Layout>
         );
     }

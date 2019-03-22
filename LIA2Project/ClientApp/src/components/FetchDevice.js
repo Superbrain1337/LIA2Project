@@ -30,6 +30,7 @@ export class FetchDevice extends Component {
     handleRedirect(redirect, id) {
         if (redirect === "Inventory") {
             this.props.history.push("/inventory/" + id);
+            
         }
     }
 

@@ -50,5 +50,18 @@ namespace LIA2Project.Models.DataAccess
                 throw;
             }
         }
+
+        public Inventory GetDeviceInventory(Guid id)
+        {
+            try
+            {
+                Inventory tbldeviceinvetory = db.Inventory.Find(id);
+                return tbldeviceinvetory;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
