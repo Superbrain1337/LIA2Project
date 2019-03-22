@@ -8,12 +8,17 @@ export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, caseList: [], empData: new CaseData, usrData: new UsersData };
+        this.state = { title: "", loading: true, caseList: [], userList: [], empData: new CaseData, usrData: new UsersData };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
                 this.setState({ caseList: data });
+            });
+        fetch('api/Users/Index')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ usrList: data, loading: false });
             });
 
         var empid = this.props.match.params["empid"];
@@ -29,7 +34,7 @@ export class AddCase extends Component {
 
         // This will set state for Add employee  
         else {
-            this.state = { title: "Create", loading: false, caseList: [], empData: new CaseData };
+            this.state = { title: "Create", loading: false, caseList: [], empData: new CaseData, usrData: new UsersData };
         }
 
         // This binding is necessary to make "this" work in the callback  
@@ -74,7 +79,7 @@ export class AddCase extends Component {
     }
 
     // Returns the HTML Form to the render() method.  
-    renderCreateForm(caseList) {
+    renderCreateForm(caseList, userList) {
         return (
             <form onSubmit={this.handleSave} >
                 <div className="form-group row " >
@@ -93,15 +98,21 @@ export class AddCase extends Component {
                     </div>
                 </div >
                 <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="userTelephone">Telephone</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control input-lg" type="text" name="userTelephone" defaultValue={this.state.usrData.userTelephone} required />
+                    </div>
+                </div >
+                <div className="form-group row " >
                     <label className=" control-label col-md-12 " htmlFor="caseCreatedUser">Created by</label>
                     <div className="col-lg-4 ">
-                        <input className="form-control" type="text" name="caseCreatedUser" defaultValue={this.state.empData.caseCreatedUser} required />
+                        <input className="form-control" type="text" name="caseCreatedUser" defaultValue={this.state.empData.caseCreatedUser} disabled="disabled" />
                     </div>
                 </div >
                 <div className="form-group row " >
                     <label className=" control-label col-md-12 " htmlFor="caseReportedBy">Reported by</label>
                     <div className="col-lg-4 ">
-                        <input className="form-control" type="text" name="caseReportedBy" defaultValue={this.state.empData.caseReportedBy} required />
+                        <input className="form-control" type="text" name="caseReportedBy" defaultValue={this.state.empData.caseReportedBy} disabled="disabled" />
                     </div>
                 </div >
                 <div className="form-group">

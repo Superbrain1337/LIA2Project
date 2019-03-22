@@ -25,7 +25,7 @@ export class FetchCase extends Component {
 
     }
 
-    
+
     // Handle Delete request for a case  
     handleDelete(id) {
         if (!window.confirm("Do you want to delete case with Id: " + id))
@@ -42,7 +42,7 @@ export class FetchCase extends Component {
                     });
             });
         }
-    } 
+    }
 
     handleEdit(id) {
         this.props.history.push("/cases/edit/" + id);
@@ -72,11 +72,12 @@ export class FetchCase extends Component {
                             <td>{emp.caseDescription}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
-                            <td> {usrList.map(usr =>
-                                (
+                            <td>
+                                {usrList.map(usr =>
+
                                     <td>{usr.userTelephone}</td>
-                                )
-                            )}</td>
+
+                                )}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
                             <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
@@ -100,9 +101,23 @@ export class FetchCase extends Component {
                 <Link to="/addcase">Create New</Link>
             </p>
             {contents}
+
+            <button id="myBtn">Open Modal</button>
+
+            <div id="myModal" className="modal">
+
+                <div className="modal-content">
+                    <span className="close">&times;</span>
+                    <p>Some text in the Modal..</p>
+                </div>
+
+            </div>
         </div>);
+
     }
 }
+
+
 
 export class CaseData {
     caseId = 0;
@@ -110,8 +125,8 @@ export class CaseData {
     caseDescription
     caseCreatedUser
     caseReportedBy
-}    
+}
 export class UsersData {
-    UserLoginName = "";
-    UserTelephone = "";
+    userLoginName = "";
+    userTelephone = "";
 }
