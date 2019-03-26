@@ -18,8 +18,8 @@ const customStyles = {
 export class FetchCase extends Component {
     constructor(props) {
         super(props);
-        this.state = { empList: [], usrList: [], loading: true, modalIsOpen: false, x : 0 };
-        
+        this.state = { empList: [], usrList: [], loading: true, modalIsOpen: false, x: 0 };
+
 
         fetch('api/Cases/Index')
             .then(response => response.json())
@@ -41,8 +41,8 @@ export class FetchCase extends Component {
         this.closeModal = this.closeModal.bind(this);
     }
 
-    openModal(input) {
-        this.setState({ modalIsOpen: true, x : input});
+    openModal(input, input2, input3, input4, input5, input6) {
+        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xuserTelephone: input6 });
     }
 
     afterOpenModal() {
@@ -94,18 +94,16 @@ export class FetchCase extends Component {
                 </thead>
                 <tbody>
                     {empList.map(emp =>
-                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId)}>
+                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, usrList.userTelephone)}>
                             <td></td>
-                            <td> { emp.caseId }</td>
+                            <td> {emp.caseId}</td>
                             <td>{emp.caseName}</td>
                             <td>{emp.caseDescription}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
                             <td>
                                 {usrList.map(usr =>
-
                                     <td>{usr.userTelephone}</td>
-
                                 )}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
@@ -134,22 +132,17 @@ export class FetchCase extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {empList.map(emp =>
-                        (<tr key={this.state.x}>
-                            <td></td>
-                            <td> {x.caseId}</td>
-                            <td>{x.caseName}</td>
-                            <td>{x.caseDescription}</td>
-                            <td>{x.caseCreatedUser}</td>
-                            <td>{x.caseReportedBy}</td>
-                            <td>
-                                {usrList.map(usr =>
 
-                                    <td>{x.userTelephone}</td>
+                    <tr key={this.state.x}>
+                        <td></td>
+                        <td> {this.state.x}</td>
+                        <td>{this.state.xcaseName}</td>
+                        <td>{this.state.xcaseDescription}</td>
+                        <td>{this.state.xcaseCreatedUser}</td>
+                        <td>{this.state.xcaseReportedBy}</td>
+                        <td>{this.state.xuserTelephone}</td>
+                    </tr>
 
-                                )}</td>
-                        </tr>)
-                    )}
                 </tbody>
             </table>
         );
@@ -169,7 +162,7 @@ export class FetchCase extends Component {
             </p>
             {contents}
 
-            
+
             <div>
                 <button onClick={this.openModal}>Open Modal</button>
                 <Modal
@@ -180,19 +173,19 @@ export class FetchCase extends Component {
                     contentLabel="Example Modal"
                 >
 
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-                    <button onClick={this.closeModal}>close</button>
+                    <h2 ref={subtitle => this.subtitle = subtitle}>{this.state.xcaseName}</h2>
                     
-                        <div>{this.state.x.caseName}</div> 
-                                
-                    <div>Id for this row is {this.state.x}, do you want to edit? xd <br />
+
+                    <div>{this.state.x.caseName}</div>
+
+                    <div>Id for this row is {this.state.x}, do you want to edit? <br />
                         <a className="action" onClick={(x) => this.handleEdit(this.state.x)}>Edit</a> <br />
                         {this.renderModalTable(this.state.empList, this.state.usrList, this.state.x)}
                     </div>
+                    <button onClick={this.closeModal}>close</button>
+                </Modal>
+            </div>
 
-                    </Modal>
-                </div>
-            
         </div>);
 
     }
