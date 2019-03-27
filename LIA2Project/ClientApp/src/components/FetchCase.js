@@ -1,17 +1,18 @@
 ﻿import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
+import { UserData } from './UserLogin';
 
 
 export class FetchCase extends Component {
     constructor(props) {
         super(props);
-        this.state = { empList: [], loading: true };
+        this.state = { caseList: [], loading: true };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
-                this.setState({ empList: data, loading: false });
+                this.setState({ caseList: data, loading: false });
             });
 
         // This binding is necessary to make "this" work in the callback  
@@ -20,7 +21,13 @@ export class FetchCase extends Component {
 
     }
 
-    
+    componentDidMount() {
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            this.props.history.push("/userlogin");
+        }
+    }
+
+
     // Handle Delete request for a case  
     handleDelete(id) {
         if (!window.confirm("Do you want to delete case with Id: " + id))
@@ -31,20 +38,24 @@ export class FetchCase extends Component {
             }).then(data => {
                 this.setState(
                     {
-                        empList: this.state.empList.filter((rec) => {
+                        caseList: this.state.caseList.filter((rec) => {
                             return (rec.caseId !== id);
                         })
                     });
             });
         }
-    } 
+    }
 
     handleEdit(id) {
         this.props.history.push("/cases/edit/" + id);
     }
 
     // Returns the HTML table to the render() method.  
-    renderCaseTable(empList) {
+    renderCaseTable(caseList) {
+
+        console.log("renderCaseTable");
+        
+
         return (
             <table className='table'>
                 <thead>
@@ -55,14 +66,14 @@ export class FetchCase extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {empList.map(emp =>
+                    {caseList.map(emp =>
                         (<tr key={emp.caseId}>
                             <td></td>
                             <td>{emp.caseId}</td>
                             <td>{emp.caseName}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
-                            <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
+                                <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
                             </td>
                         </tr>)
                     )}
@@ -74,20 +85,25 @@ export class FetchCase extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCaseTable(this.state.empList);
+            : this.renderCaseTable(this.state.caseList);
+
+        let username = sessionStorage.getItem('userName');
 
         return (<div>
             <h1>Case Data</h1>
             <p>This component demonstrates fetching Case data from the server.</p>
+            <p>The logged in user is --- {username} ---</p>
             <p>
                 <Link to="/addcase">Create New</Link>
             </p>
             {contents}
         </div>);
+
     }
 }
 
 export class CaseData {
     caseId = 0;
     caseName = "";
+    caseNotes = "";
 }    
