@@ -19,8 +19,12 @@ export class FetchDevice extends Component {
             .then(data => {
                 this.setState({ cscList: data, loading: false });
             });
+    }
 
-
+    componentDidMount() {
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            this.props.history.push("/userlogin");
+        }
     }
 
     handleEdit(id) {
@@ -30,7 +34,7 @@ export class FetchDevice extends Component {
     handleRedirect(redirect, id) {
         if (redirect === "Inventory") {
             this.props.history.push("/inventory/" + id);
-            
+
         }
     }
 
@@ -55,7 +59,7 @@ export class FetchDevice extends Component {
                             <td onClick={() => this.handleRedirect("Inventory", dev.caseDeviceInventoryId)}>{dev.caseDeviceName}</td>
                         </tr>)
                     )}
-                    
+
                 </tbody>
             </table>
         );
