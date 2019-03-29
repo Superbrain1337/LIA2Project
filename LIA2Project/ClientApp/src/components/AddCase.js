@@ -5,13 +5,14 @@ import { CaseData } from './FetchCase';
 import { UsersData } from './FetchCase';
 
 
+
 export class AddCase extends Component {
     constructor(props) {
         super(props);
-        
-        
 
-        this.state = { title: "", loading: true, caseList: [], userList: [], empData: new CaseData, usrData: new UsersData };
+
+
+        this.state = { title: "", loading: true, caseList: [], userList: [], empData: new CaseData, usrData: new UsersData, value: 'Allmänt' };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
@@ -37,16 +38,20 @@ export class AddCase extends Component {
 
         // This will set state for Add employee  
         else {
-            this.state = { title: "Create", loading: false, caseList: [], empData: new CaseData, usrData: new UsersData };
+            this.state = { title: "Create", loading: false, caseList: [], userList: [], empData: new CaseData, usrData: new UsersData };
         }
 
         // This binding is necessary to make "this" work in the callback  
+        this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
 
-    
 
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
     // This will handle the submit form event.  
     handleSave(event) {
         event.preventDefault();
@@ -105,8 +110,22 @@ export class AddCase extends Component {
                 <div className="form-group row " >
                     <label className=" control-label col-md-12 " htmlFor="userTelephone">Telephone</label>
                     <div className="col-lg-4 ">
-                        <input className="form-control input-lg" type="text" name="userTelephone" defaultValue={this.state.usrData.userTelephone} required />
+                        <input className="form-control input-lg" onChange="this.handleChange" type="text" name="userTelephone" defaultValue={this.state.usrData.userTelephone} required />
                     </div>
+                </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-4 " htmlFor="caseType">
+                            Case Type:
+                            <select value={this.state.value} onChange="this.handleChange" name="caseType" className="form-control input-lg" defaultValue={this.state.empData.caseType} required>
+                                <option value="0">Allmänt</option>
+                                <option value="1">Support</option>
+                                <option value="2">Inköp</option>
+                                <option value="3">Change</option>
+                                <option value="4">Problem</option>
+                                <option value="5">Incident</option>
+                                <option value="6">Service Request</option>
+                            </select>
+                    </label>
                 </div >
                 <div className="form-group row " >
                     <label className=" control-label col-md-12 " htmlFor="caseCreatedUser">Created by</label>

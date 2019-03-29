@@ -41,8 +41,8 @@ export class FetchCase extends Component {
         this.closeModal = this.closeModal.bind(this);
     }
 
-    openModal(input, input2, input3, input4, input5, input6) {
-        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xuserTelephone: input6 });
+    openModal(input, input2, input3, input4, input5, input6, input7) {
+        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xuserTelephone: input6, xcaseType : input7 });
     }
 
     afterOpenModal() {
@@ -54,6 +54,7 @@ export class FetchCase extends Component {
         this.setState({ modalIsOpen: false });
     }
 
+    
 
     // Handle Delete request for a case  
     handleDelete(id) {
@@ -80,6 +81,7 @@ export class FetchCase extends Component {
     // Returns the HTML table to the render() method.  
     renderCaseTable(empList, usrList) {
         return (
+
             <table className='table' id="caseTable">
                 <thead>
                     <tr>
@@ -90,11 +92,12 @@ export class FetchCase extends Component {
                         <th>Created by </th>
                         <th>Reported by </th>
                         <th>Telephone</th>
+                        <th>Case Type</th>
                     </tr>
                 </thead>
                 <tbody>
                     {empList.map(emp =>
-                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, usrList.userTelephone)}>
+                        (<tr key={emp.caseCreatedUser} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, usrList.userTelephone, emp.caseType)}>
                             <td></td>
                             <td> {emp.caseId}</td>
                             <td>{emp.caseName}</td>
@@ -105,6 +108,7 @@ export class FetchCase extends Component {
                                 {usrList.map(usr =>
                                     <td>{usr.userTelephone}</td>
                                 )}</td>
+                            <td>{emp.caseType}</td>
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a>  |
                             <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
@@ -129,6 +133,7 @@ export class FetchCase extends Component {
                         <th>Created by </th>
                         <th>Reported by </th>
                         <th>Telephone</th>
+                        <th>Case Type</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,6 +146,7 @@ export class FetchCase extends Component {
                         <td>{this.state.xcaseCreatedUser}</td>
                         <td>{this.state.xcaseReportedBy}</td>
                         <td>{this.state.xuserTelephone}</td>
+                        <td>{this.state.xcaseType}</td>
                     </tr>
 
                 </tbody>
@@ -199,6 +205,7 @@ export class CaseData {
     caseDescription
     caseCreatedUser
     caseReportedBy
+    caseType
 }
 export class UsersData {
     userLoginName = "";
