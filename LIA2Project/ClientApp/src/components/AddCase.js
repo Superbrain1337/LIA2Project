@@ -24,8 +24,10 @@ export class AddCase extends Component {
             fetch('api/Cases/Details/' + caseId)
                 .then(response => response.json())
                 .then(data => {
+                    console.log("caseId > 0 data: " + data);
                     this.setState({ title: "Edit", loading: false, caseData: data });
                 });
+            console.log("caseData: " + this.state.caseData);
         }
 
         if (userId > 0) {
@@ -50,8 +52,6 @@ export class AddCase extends Component {
     handleSave(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-
-        
 
         fetch('api/Users/SendMail?message=Hejsan&userMail=a&password=b')
             .then(response => response.json())
@@ -97,17 +97,23 @@ export class AddCase extends Component {
                 <div className="form-group row" >
                     <input type="hidden" name="caseId" value={this.state.caseData.caseId} />
                 </div>
-                <div className="form-group row" >
+                <div className="form-group row">
                     <input type="hidden" name="userId" value={this.state.userData.userId} />
                 </div>
+                <div className="form-group row">
+                    <label className=" control-label col-md-12" htmlFor="caseCreatedUser">caseCreatedUser</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="text" name="caseCreatedUser" value={sessionStorage.getItem("userName")} disabled="disabled" />
+                    </div>
+                </div>
                 < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Name">Case Name</label>
+                    <label className=" control-label col-md-12" htmlFor="caseName">Case Name</label>
                     <div className="col-md-4">
                         <input className="form-control" type="text" name="caseName" defaultValue={this.state.caseData.caseName} required />
                     </div>
                 </div >
                 < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="Notes">Case Notes</label>
+                    <label className=" control-label col-md-12" htmlFor="caseNotes">Case Notes</label>
                     <div className="col-md-4">
                         <input className="form-control" type="text" name="caseNotes" defaultValue={this.state.caseData.caseNotes} required />
                     </div>

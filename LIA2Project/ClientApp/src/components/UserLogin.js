@@ -61,6 +61,7 @@ export class UserLogin extends Component {
                     sessionStorage.setItem("loggedIn", 'true');
                     sessionStorage.setItem("userName", username);
                     sessionStorage.setItem("userEmail", email);
+                    sessionStorage.setItem("userId", id);
                 }
                 this.setState({
                     loading: false

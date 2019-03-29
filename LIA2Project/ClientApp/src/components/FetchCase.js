@@ -90,7 +90,7 @@ export class FetchCase extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCaseTable(this.state.caseList, this.state.usrList);
+            : this.renderCaseTable(this.state.caseList);
 
         let username = sessionStorage.getItem('userName');
 

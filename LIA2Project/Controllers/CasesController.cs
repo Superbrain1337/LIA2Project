@@ -21,11 +21,22 @@ namespace LIA2Project.Controllers
             return objCase.GetAllCases();
         }
 
+        [HttpGet]
+        [Route("api/Cases/GetRecent")]
+        public IEnumerable<Cases> GetRecentCases()
+        {
+            IList<Cases> cutDownList = new List<Cases>();
+            IEnumerable<Cases> fullList = objCase.GetAllCases();
+            int size = fullList.Count();
+            cutDownList.Add(fullList.ElementAt(size - 2));
+            cutDownList.Add(fullList.Last());
+            return cutDownList;
+        }
+
         [HttpPost]
         [Route("api/Cases/Create")]
-        public int Create([Bind("CaseId")]Cases cas, string UserName)
+        public int Create(Cases cas)
         {
-            cas.CaseCreatedUser = UserName;
             return objCase.AddCase(cas);
         }
 
