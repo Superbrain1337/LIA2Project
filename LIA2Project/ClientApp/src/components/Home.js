@@ -4,12 +4,13 @@ import React, { Component } from 'react';
 export class Home extends Component {
     displayName = Home.name
 
-
+    
     render() {
         return (
+            
 
             <div>
-                <h1>Welcome to DuoSTATION servicedesk! </h1>
+                <h1>Welcome to DuoSTATION servicedesk! Å Ä Ö</h1>
                 <p>Here you can register new cases an search in our knowledgebase.</p>
                 <p> To logon to this service, you must be a customer and been assigned an account and password. </p>
                 <hr />
