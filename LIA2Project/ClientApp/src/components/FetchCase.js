@@ -34,8 +34,15 @@ export class FetchCase extends Component {
         this.closeModal = this.closeModal.bind(this);
     }
 
+    
+    componentDidMount() {
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            this.props.history.push("/userlogin");
+        }
+    }
+
     openModal(input, input2, input3, input4, input5, input6, input7) {
-        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xuserTelephone: input6, xcaseType : input7 });
+        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xcaseNotes: input6, xcaseType: input7 });
     }
 
     afterOpenModal() {
@@ -46,14 +53,6 @@ export class FetchCase extends Component {
     closeModal() {
         this.setState({ modalIsOpen: false });
     }
-
-    componentDidMount() {
-        if (sessionStorage.getItem('loggedIn') !== 'true') {
-            this.props.history.push("/userlogin");
-        }
-    }
-
-
     // Handle Delete request for a case  
     handleDelete(id) {
         if (!window.confirm("Do you want to delete case with Id: " + id))
@@ -91,6 +90,7 @@ export class FetchCase extends Component {
                         <th>Case Id</th>
                         <th>Case Name</th>
                         <th>Case Description </th>
+                        <th>Case Notes</th>
                         <th>Created by </th>
                         <th>Reported by </th>
                         <th>Case Type</th>
@@ -98,11 +98,12 @@ export class FetchCase extends Component {
                 </thead>
                 <tbody>
                     {caseList.map(emp =>
-                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, emp.caseType)}>
+                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, emp.caseNotes, emp.caseType)}>
                             <td></td>
                             <td> {emp.caseId}</td>
                             <td>{emp.caseName}</td>
                             <td>{emp.caseDescription}</td>
+                            <td>{emp.caseNotes}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
                             <td>{emp.caseType}</td>
@@ -127,9 +128,9 @@ export class FetchCase extends Component {
                         <th>Case Id</th>
                         <th>Case Name</th>
                         <th>Case Description </th>
+                        <th>Case Notes </th>
                         <th>Created by </th>
                         <th>Reported by </th>
-                        <th>Telephone</th>
                         <th>Case Type</th>
                     </tr>
                 </thead>
@@ -140,9 +141,9 @@ export class FetchCase extends Component {
                         <td> {this.state.x}</td>
                         <td>{this.state.xcaseName}</td>
                         <td>{this.state.xcaseDescription}</td>
+                        <td>{this.state.xcaseNotes}</td>
                         <td>{this.state.xcaseCreatedUser}</td>
                         <td>{this.state.xcaseReportedBy}</td>
-                        <td>{this.state.xuserTelephone}</td>
                         <td>{this.state.xcaseType}</td>
                     </tr>
 
@@ -206,6 +207,7 @@ export class CaseData {
     caseCreatedUser
     caseReportedBy
     caseType
+    caseNotes
 }
 export class UsersData {
     userLoginName = "";
