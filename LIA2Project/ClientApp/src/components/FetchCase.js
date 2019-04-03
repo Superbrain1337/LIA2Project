@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { UserData } from './UserLogin';
+import './Table.css';
 
 const customStyles = {
     content: {
@@ -16,15 +17,21 @@ const customStyles = {
 };
 
 
+
 export class FetchCase extends Component {
     constructor(props) {
         super(props);
-        this.state = { caseList: [], loading: true, modalIsOpen: false, x: 0 };
+        this.state = { caseList: [], devList: [], loading: true, modalIsOpen: false, x: 0};
 
         fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
                 this.setState({ caseList: data, loading: false });
+            });
+        fetch('api/Devices/Index')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ devList: data, loading: false });
             });
         // This binding is necessary to make "this" work in the callback  
         this.handleDelete = this.handleDelete.bind(this);
@@ -41,8 +48,8 @@ export class FetchCase extends Component {
         }
     }
 
-    openModal(input, input2, input3, input4, input5, input6, input7) {
-        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xcaseNotes: input6, xcaseType: input7 });
+    openModal(input, input2, input3, input4, input5, input6, input7, input8, input9, input10) {
+        this.setState({ modalIsOpen: true, x: input, xcaseName: input2, xcaseDescription: input3, xcaseCreatedUser: input4, xcaseReportedBy: input5, xcaseNotes: input6, xcaseType: input7, xcaseStatus: input8, xcaseCalcTime: input9, xcasePriority: input10 });
     }
 
     afterOpenModal() {
@@ -76,16 +83,15 @@ export class FetchCase extends Component {
     }
 
     // Returns the HTML table to the render() method.  
-    renderCaseTable(caseList) {
+    renderCaseTable(caseList, devList) {
 
         console.log("renderCaseTable");
 
 
         return (
-
             <table className='table' id="caseTable">
                 <thead>
-                    <tr>
+                    <tr className="notfirst">
                         <th></th>
                         <th>Case Id</th>
                         <th>Case Name</th>
@@ -94,11 +100,13 @@ export class FetchCase extends Component {
                         <th>Created by </th>
                         <th>Reported by </th>
                         <th>Case Type</th>
+                        <th>Case Status</th>
+                        <th>Computer Name</th>
                     </tr>
                 </thead>
                 <tbody>
                     {caseList.map(emp =>
-                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, emp.caseNotes, emp.caseType)}>
+                        (<tr key={emp.caseId} onClick={() => this.openModal(emp.caseId, emp.caseName, emp.caseDescription, emp.caseCreatedUser, emp.caseReportedBy, emp.caseNotes, emp.caseType, emp.caseStatus, emp.caseCalcTime, emp.casePriority)}>
                             <td></td>
                             <td> {emp.caseId}</td>
                             <td>{emp.caseName}</td>
@@ -107,23 +115,98 @@ export class FetchCase extends Component {
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
                             <td>{emp.caseType}</td>
+                            <td>{emp.caseStatus}</td>
+                            <td></td>
+                            
                             <td>
                                 <a className="action" onClick={(id) => this.handleEdit(emp.caseId)}>Edit</a> |
                                 <a className="action" onClick={(id) => this.handleDelete(emp.caseId)}>Delete</a>
                             </td>
 
                         </tr>))}
+                    {devList.map(dev =>
+                        (<tr key={dev.caseId}>
+                            <td>{dev.caseDeviceName}</td>
+                            <td>{dev.caseId}</td>
+                        </tr>))}
                 </tbody>
             </table>
         );
     }
-
+    renderPrioritySwitch(x) {
+        switch (x) {
+            case 2:
+                return 'Akut';
+            case 1:
+                return 'Hög';
+            case 0:
+                return 'Normal';
+            case -1:
+                return 'Låg';
+            case -2:
+                return 'Ingen';
+            default:
+                return 'Normal';
+        }
+    }
+    renderTypeSwitch(x) {
+        switch (x) {
+            case 0:
+                return 'Allmänt';
+            case 1:
+                return 'Support';
+            case 2:
+                return 'Inköp';
+            case 3:
+                return 'Change';
+            case 4:
+                return 'Problem';
+            case 5:
+                return 'Incident';
+            case 6:
+                return 'Service request';
+            default:
+                return 'Allmänt';
+        }
+    }
+    renderStatusSwitch(x) {
+        switch (x) {
+            case 0:
+                return 'Nytt';
+            case 1:
+                return 'Mottaget';
+            case 2:
+                return 'Tilldelat';
+            case 3:
+                return 'Arbetar';
+            case 4:
+                return 'Testar';
+            case 5:
+                return 'Väntar';
+            case 6:
+                return 'Pausat';
+            case 7:
+                return 'Uppskjutet';
+            case 8:
+                return 'Avbrutet';
+            case 9:
+                return 'Klart';
+            case 10:
+                return 'Stoppat';
+            case 11:
+                return 'Godkänt';
+            case 12:
+                return 'Ej godkänt';
+            default:
+                return 'Nytt';
+        }
+    }
     // Returns the HTML table to the render() method.  
     renderModalTable(empList, usrList, x) {
         return (
             <table className='table' id="caseTable2">
                 <thead>
-                    <tr>
+                    <tr className="notfirst">
                         <th></th>
                         <th>Case Id</th>
                         <th>Case Name</th>
@@ -132,6 +215,9 @@ export class FetchCase extends Component {
                         <th>Created by </th>
                         <th>Reported by </th>
                         <th>Case Type</th>
+                        <th>Status</th>
+                        <th>Estimated Time</th>
+                        <th>Priority</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,7 +230,13 @@ export class FetchCase extends Component {
                         <td>{this.state.xcaseNotes}</td>
                         <td>{this.state.xcaseCreatedUser}</td>
                         <td>{this.state.xcaseReportedBy}</td>
-                        <td>{this.state.xcaseType}</td>
+                        <td>{this.renderTypeSwitch(this.state.xcaseType)}</td>
+                        <td>{this.renderStatusSwitch(this.state.xcaseStatus)}</td>
+                        <td>{this.state.xcaseCalcTime} Minute(s)</td>
+                        <td>{this.renderPrioritySwitch(this.state.xcasePriority)}
+                            
+                        </td>
+                        
                     </tr>
 
                 </tbody>
@@ -152,11 +244,27 @@ export class FetchCase extends Component {
         );
     }
 
+    /*Detta ska kunnas ses i vår modal
+ 
+Number *
+Status *
+Reported 
+Estimated to be finished *
+Service ?
+
+Case *
+Priority *
+Reported by ?
+Handler
+Group
+
+
+ */
 
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderCaseTable(this.state.caseList, this.state.usrList);
+            : this.renderCaseTable(this.state.caseList, this.state.devList);
 
         let username = sessionStorage.getItem('userName');
 
@@ -171,7 +279,6 @@ export class FetchCase extends Component {
 
 
             <div>
-                <button onClick={this.openModal}>Open Modal</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
@@ -200,6 +307,7 @@ export class FetchCase extends Component {
 
 
 
+
 export class CaseData {
     caseId = 0;
     caseName = "";
@@ -208,6 +316,9 @@ export class CaseData {
     caseReportedBy
     caseType
     caseNotes
+    caseStatus
+    caseCalcTime
+    casePriority
 }
 export class UsersData {
     userLoginName = "";
