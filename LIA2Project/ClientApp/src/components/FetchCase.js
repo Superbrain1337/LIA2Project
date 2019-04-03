@@ -9,7 +9,7 @@ const customStyles = {
     content: {
         top: '50%',
         left: '50%',
-        right: 'auto',
+        right: '60%',
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
@@ -204,7 +204,7 @@ export class FetchCase extends Component {
     // Returns the HTML table to the render() method.  
     renderModalTable(empList, usrList, x) {
         return (
-            <table className='table' id="caseTable2">
+            <table className='table' id="caseTable2" >
                 <thead>
                     <tr className="notfirst">
                         <th></th>
@@ -254,7 +254,7 @@ Service ?
 
 Case *
 Priority *
-Reported by ?
+Reported by *
 Handler
 Group
 
