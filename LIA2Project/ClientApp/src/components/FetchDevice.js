@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 export class FetchDevice extends Component {
     constructor(props) {
         super(props);
-        this.state = { devList: [], cscList: [], loading: true };
+        this.state = { pageName: 'fetchdevice' ,devList: [], cscList: [], loading: true };
 
         fetch('api/Devices/Index')
             .then(response => response.json())

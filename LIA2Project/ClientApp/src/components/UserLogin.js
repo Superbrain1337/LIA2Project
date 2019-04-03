@@ -35,7 +35,9 @@ export class UserLogin extends Component {
 
     componentDidMount() {
         if (sessionStorage.getItem('loggedIn') === 'true') {
-            this.props.history.push("/fetchcase");
+            var redirect = this.props.match.params["pageName"];
+            console.log(redirect);
+            this.props.history.push("/" + redirect);
         }
     }
 

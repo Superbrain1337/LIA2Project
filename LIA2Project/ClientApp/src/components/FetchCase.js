@@ -7,7 +7,7 @@ import { UserData } from './UserLogin';
 export class FetchCase extends Component {
     constructor(props) {
         super(props);
-        this.state = { caseList: [], loading: true };
+        this.state = { pageName: 'fetchcase' ,caseList: [], loading: true };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
