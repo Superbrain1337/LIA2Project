@@ -30,13 +30,18 @@ export class UserLogin extends Component {
         this.handleCancel = this.handleCancel.bind(this);
     }
 
-     
-    
+
+    componentWillMount() {
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            sessionStorage.setItem('loggedIn', 'false');
+        }
+    }
 
     componentDidMount() {
         if (sessionStorage.getItem('loggedIn') === 'true') {
-            var redirect = this.props.match.params["pageName"];
+            var redirect = '';
             console.log(redirect);
+            
             this.props.history.push("/" + redirect);
         }
     }
@@ -68,14 +73,16 @@ export class UserLogin extends Component {
                 this.setState({
                     loading: false
                 });
-                this.props.history.push("/fetchcase");
+                var redirect = '';
+                console.log(redirect);
+                this.props.history.push("/" + redirect);
             });
 
     }
 
     handleCancel(e) {
         e.preventDefault();
-        this.props.history.push("/fetchcase");
+        this.props.history.push("/");
     }
 
     renderLoginForm(userList) {

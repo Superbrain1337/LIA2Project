@@ -6,8 +6,22 @@ import './NavMenu.css';
 
 export class NavMenu extends Component {
     displayName = NavMenu.name
+    
+    
+
+    checkText() {
+        if (sessionStorage.getItem('loggedIn') === 'false') {
+            return 'Logout User';
+        }
+        else {
+            return 'Login User';
+        }
+    }
 
     render() {
+        console.log('NavMenu Render');
+        let theText = this.checkText();
+
         return (
             <Navbar inverse fixedTop fluid collapseOnSelect>
                 <Navbar.Header>
@@ -23,16 +37,6 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='home' /> Home
                             </NavItem>
                         </LinkContainer>
-                        <LinkContainer to={'/counter'}>
-                            <NavItem>
-                                <Glyphicon glyph='education' /> Counter
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer to={'/fetchdata'}>
-                            <NavItem>
-                                <Glyphicon glyph='th-list' /> Fetch data
-                            </NavItem>
-                        </LinkContainer>
                         <LinkContainer to={'/fetchcase'}>
                             <NavItem>
                                 <Glyphicon glyph='th-list' /> Fetch case
@@ -43,9 +47,9 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='th-list' /> Fetch device
                             </NavItem>
                         </LinkContainer>
-                                <LinkContainer to={'/userLogin'}>
+                        <LinkContainer to={'/userLogin'}>
                             <NavItem>
-                                <Glyphicon glyph='th-list' /> Login User
+                                <Glyphicon glyph='th-list' /> {theText}
                             </NavItem>
                         </LinkContainer>
                     </Nav>
