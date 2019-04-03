@@ -4,11 +4,13 @@ import { Link, NavLink } from 'react-router-dom';
 import { CaseData } from './FetchCase';
 import { UserData } from './UserLogin';
 
+
+
 export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, caseList: [], caseData: new CaseData, userData: new UserData };
+        this.state = { title: "", loading: true, caseList: [], caseData: new CaseData, userData: new UserData, value: 'Allmänt' };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
@@ -18,6 +20,8 @@ export class AddCase extends Component {
 
         var caseId = this.props.match.params["caseId"];
         var userId = this.props.match.params["userId"];
+
+        console.log("Case id: "+ caseId + " User id: " + userId);
 
         // This will set state for Edit cases  
         if (caseId > 0) {
@@ -40,18 +44,26 @@ export class AddCase extends Component {
 
         // This will set state for Add case  
         else {
-            this.state = { title: "Create", loading: false, caseList: [], caseData: new CaseData, userData: new UserData };
+            this.state = { title: "Create", loading: false, caseList: [], userList: [], caseData: new CaseData, userData: new UserData };
         }
 
         // This binding is necessary to make "this" work in the callback  
+        this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
 
+
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
+    }
     // This will handle the submit form event.  
     handleSave(event) {
         event.preventDefault();
         const data = new FormData(event.target);
+
+
 
         fetch('api/Users/SendMail?message=Hejsan&userMail=a&password=b')
             .then(response => response.json())
@@ -91,27 +103,50 @@ export class AddCase extends Component {
     }
 
     // Returns the HTML Form to the render() method.  
-    renderCreateForm(caseList) {
+    renderCreateForm(caseList, userList) {
         return (
             <form onSubmit={this.handleSave} >
-                <div className="form-group row" >
+                <div className="form-group row " >
                     <input type="hidden" name="caseId" value={this.state.caseData.caseId} />
                 </div>
-                <div className="form-group row">
-                    <input type="hidden" name="userId" value={this.state.userData.userId} />
-                </div>
-                <div className="form-group row">
-                    <label className=" control-label col-md-12" htmlFor="caseCreatedUser">caseCreatedUser</label>
-                    <div className="col-md-4">
-                        <input className="form-control" type="text" name="caseCreatedUser" value={sessionStorage.getItem("userName")} disabled="disabled" />
-                    </div>
-                </div>
-                < div className="form-group row" >
-                    <label className=" control-label col-md-12" htmlFor="caseName">Case Name</label>
-                    <div className="col-md-4">
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="Name">Case Name</label>
+                    <div className="col-md-4 ">
                         <input className="form-control" type="text" name="caseName" defaultValue={this.state.caseData.caseName} required />
                     </div>
                 </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseDescription">Description</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control input-lg" type="text" name="caseDescription" defaultValue={this.state.caseData.caseDescription} required />
+                    </div>
+                </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-4 " htmlFor="caseType">
+                        Case Type:
+                            <select value={this.state.value} onChange="this.handleChange" name="caseType" className="form-control input-lg" defaultValue={this.state.caseData.caseType} required>
+                            <option value="0">Allmänt</option>
+                            <option value="1">Support</option>
+                            <option value="2">Inköp</option>
+                            <option value="3">Change</option>
+                            <option value="4">Problem</option>
+                            <option value="5">Incident</option>
+                            <option value="6">Service Request</option>
+                        </select>
+                    </label>
+                </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseCreatedUser">Created by</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="text" name="caseCreatedUser" defaultValue={this.state.caseData.caseCreatedUser} disabled="disabled" />
+                    </div>
+                </div >
+                <div className="form-group row " >
+                    <label className=" control-label col-md-12 " htmlFor="caseReportedBy">Reported by</label>
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="text" name="caseReportedBy" defaultValue={this.state.caseData.caseReportedBy} disabled="disabled" />
+                    </div>
+                </div>
                 < div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="caseNotes">Case Notes</label>
                     <div className="col-md-4">
@@ -120,10 +155,10 @@ export class AddCase extends Component {
                 </div >
 
                 <div className="form-group">
-                    <button type="submit" className="btn btn-default">Save</button>
+                    <button type="submit" className="btn btn-success">Report Case</button>
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
-            </form >
+            </form>
         );
     }
 
@@ -137,6 +172,7 @@ export class AddCase extends Component {
             <h3>Case</h3>
             <hr />
             {contents}
+
         </div>);
     }
 }  
