@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { CaseData } from './FetchCase';
 import { UserData } from './UserLogin';
+import { DeviceData } from './FetchDevice';
 
 
 
@@ -10,12 +11,17 @@ export class AddCase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { title: "", loading: true, caseList: [], caseData: new CaseData, userData: new UserData, value: 'Allmänt' };
+        this.state = { title: "", loading: true, caseList: [], caseData: new CaseData, userData: new UserData, deviceData: new DeviceData, value: 'Allmänt' };
 
         fetch('api/Cases/Index')
             .then(response => response.json())
             .then(data => {
                 this.setState({ caseList: data });
+            });
+        fetch('api/Devices/Index')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ devList: data, loading: false });
             });
 
         var caseId = this.props.match.params["caseId"];
@@ -44,7 +50,7 @@ export class AddCase extends Component {
 
         // This will set state for Add case  
         else {
-            this.state = { title: "Create", loading: false, caseList: [], userList: [], caseData: new CaseData, userData: new UserData };
+            this.state = { title: "Create", loading: false, caseList: [], userList: [], caseData: new CaseData, userData: new UserData, deviceData: new DeviceData };
         }
 
         // This binding is necessary to make "this" work in the callback  
@@ -110,7 +116,7 @@ export class AddCase extends Component {
                     <input type="hidden" name="caseId" value={this.state.caseData.caseId} />
                 </div>
                 <div className="form-group row " >
-                    <label className=" control-label col-md-12 " htmlFor="Name">Case Name</label>
+                    <label className=" control-label col-md-12 " htmlFor="Name">Subject</label>
                     <div className="col-md-4 ">
                         <input className="form-control" type="text" name="caseName" defaultValue={this.state.caseData.caseName} required />
                     </div>
@@ -136,23 +142,68 @@ export class AddCase extends Component {
                     </label>
                 </div >
                 <div className="form-group row " >
-                    <label className=" control-label col-md-12 " htmlFor="caseCreatedUser">Created by</label>
-                    <div className="col-lg-4 ">
-                        <input className="form-control" type="text" name="caseCreatedUser" defaultValue={this.state.caseData.caseCreatedUser} disabled="disabled" />
-                    </div>
+                    <label className=" control-label col-md-4 " htmlFor="casePriority">
+                        Priority:
+                            <select value={this.state.value} onChange="this.handleChange" name="casePriority" className="form-control input-lg" defaultValue={0} required>
+                            <option value="2">Akut</option>
+                            <option value="1">Hög</option>
+                            <option value="0">Normal</option>
+                            <option value="-1">Låg</option>
+                            <option value="-2">Ingen</option>
+                        </select>
+                    </label>
                 </div >
-                <div className="form-group row " >
-                    <label className=" control-label col-md-12 " htmlFor="caseReportedBy">Reported by</label>
-                    <div className="col-lg-4 ">
-                        <input className="form-control" type="text" name="caseReportedBy" defaultValue={this.state.caseData.caseReportedBy} disabled="disabled" />
-                    </div>
-                </div>
                 < div className="form-group row" >
                     <label className=" control-label col-md-12" htmlFor="caseNotes">Case Notes</label>
                     <div className="col-md-4">
                         <input className="form-control" type="text" name="caseNotes" defaultValue={this.state.caseData.caseNotes} required />
                     </div>
                 </div >
+                < div className="form-group row" >
+                    <label className=" control-label col-md-12" htmlFor="userTelephone">Telephone *Not Working*</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="text" name="caseNotes" required />
+                    </div>
+                </div >
+                < div className="form-group row" >
+                    <label className=" control-label col-md-12" htmlFor="caseDeviceGroup">Computer name</label>
+                    <div className="col-md-4">
+                        <input className="form-control" type="text" name="caseDeviceGroup" defaultValue={this.state.deviceData.CaseDeviceGroup} />
+                    </div>
+                </div >
+                <div className="form-group row ">
+                    <label className=" control-label col-md-4 " htmlFor="caseStatus">
+                        Case Status:
+                            <select value={this.state.value} onChange="this.handleChange" name="caseStatus" className="form-control input-lg" defaultValue={this.state.caseData.caseStatus} disabled="disabled">
+                            <option value="0">Nytt</option>
+                            <option value="1">Mottaget</option>
+                            <option value="2">Tilldelat</option>
+                            <option value="3">Arbetar</option>
+                            <option value="4">Testar</option>
+                            <option value="5">Väntar</option>
+                            <option value="6">Pausat</option>
+                            <option value="7">Uppskjutet</option>
+                            <option value="8">Avbrutet</option>
+                            <option value="9">Klart</option>
+                            <option value="10">Stoppat</option>
+                            <option value="11">Godkänt</option>
+                            <option value="12">Ej Godkänt</option>
+                        </select>
+                    </label>
+                </div > 
+                <div className="form-group row " >
+                   
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="hidden" name="caseCreatedUser" defaultValue={sessionStorage.getItem("userName")} />
+                    </div>
+                </div >
+                <div className="form-group row " >
+                    
+                    <div className="col-lg-4 ">
+                        <input className="form-control" type="hidden" name="caseReportedBy" defaultValue={sessionStorage.getItem("userName")} />
+                    </div>
+                </div>
+                
 
                 <div className="form-group">
                     <button type="submit" className="btn btn-success">Report Case</button>

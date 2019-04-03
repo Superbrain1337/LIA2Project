@@ -42,7 +42,7 @@ export class FetchDevice extends Component {
         return (
             <table className='table'>
                 <thead>
-                    <tr>
+                    <tr className="notfirst">
                         <th>Device id</th>
                         <th>Case id</th>
                         <th>Group/Domain</th>
@@ -79,10 +79,10 @@ export class FetchDevice extends Component {
 }
 
 export class DeviceData {
-    CaseDeviceId = 0;
-    CaseId = 0;
-    CaseDeviceGroup
-    CaseDeviceName = "";
+    caseDeviceId = 0;
+    caseId = 0;
+    caseDeviceGroup
+    caseDeviceName = "";
     caseDeviceInventoryId
 }
 export class UsersData {
