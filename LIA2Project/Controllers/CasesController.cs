@@ -20,6 +20,21 @@ namespace LIA2Project.Controllers
         {
             return objCase.GetAllCases();
         }
+        [HttpGet]
+        [Route("api/Cases/GetRecent")]
+        public IEnumerable<Cases> GetRecentCases()
+        {
+            IList<Cases> cutDownList = new List<Cases>();
+            IEnumerable<Cases> fullList = objCase.GetAllCases();
+            int size = fullList.Count();
+            if (size < 2)
+            {
+                return fullList;
+            }
+            cutDownList.Add(fullList.ElementAt(size - 2));
+            cutDownList.Add(fullList.Last());
+            return cutDownList;
+        }
 
         [HttpPost]
         [Route("api/Cases/Create")]

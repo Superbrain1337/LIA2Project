@@ -109,7 +109,7 @@ export class AddCase extends Component {
     // Returns the HTML Form to the render() method.  
     renderCreateForm(caseList, userList) {
         return (
-            <form onSubmit={this.handleSave} >
+            <form onSubmit={this.handleSave} id="uploadbanner" encType="multipart/form-data" method="post" action="#">
                 <div className="form-group row " >
                     <input type="hidden" name="caseId" value={this.state.caseData.caseId} />
                 </div>
@@ -201,6 +201,8 @@ export class AddCase extends Component {
                         <input className="form-control" type="hidden" name="caseReportedBy" defaultValue={sessionStorage.getItem("userName")} />
                     </div>
                 </div>
+                <input id="fileupload" name="myfile" type="file" />
+                <input type="submit" value="submit" id="submit" />
                 
 
                 <div className="form-group">
@@ -208,6 +210,7 @@ export class AddCase extends Component {
                     <button className="btn" onClick={this.handleCancel}>Cancel</button>
                 </div >
             </form>
+
         );
     }
 

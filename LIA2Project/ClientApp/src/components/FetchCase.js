@@ -8,8 +8,8 @@ import './Table.css';
 const customStyles = {
     content: {
         top: '50%',
-        left: '50%',
-        right: '60%',
+        left: '60%',
+        right: '30%',
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
@@ -114,8 +114,8 @@ export class FetchCase extends Component {
                             <td>{emp.caseNotes}</td>
                             <td>{emp.caseCreatedUser}</td>
                             <td>{emp.caseReportedBy}</td>
-                            <td>{emp.caseType}</td>
-                            <td>{emp.caseStatus}</td>
+                            <td>{this.renderTypeSwitch(emp.caseType)}</td>
+                            <td>{this.renderStatusSwitch(emp.caseStatus)}</td>
                             <td></td>
                             
                             <td>
@@ -293,10 +293,11 @@ Group
                     <div>{this.state.x.caseName}</div>
 
                     <div>Id for this row is {this.state.x}, do you want to edit? <br />
-                        <a className="action" onClick={(x) => this.handleEdit(this.state.x)}>Edit</a> <br />
+                        <a className="action" onClick={(x) => this.handleEdit(this.state.x)}>Edit</a> <a className="action" onClick={(x) => this.handleDelete(this.state.x)}>Delete</a> <br />
                         {this.renderModalTable(this.state.empList, this.state.usrList, this.state.x)}
                     </div>
                     <button onClick={this.closeModal}>close</button>
+                        
                 </Modal>
             </div>
 
