@@ -6,8 +6,9 @@ import React, { Component } from 'react';
 export class FetchDevice extends Component {
     constructor(props) {
         super(props);
-        this.state = { pageName: 'fetchdevice' ,devList: [], cscList: [], loading: true };
+        this.state = { pageName: 'fetchdevice', devList: [], cscList: [], loading: true, DeviceId: '', CaseId: '', GroupDomain: '', Name: '' };
 
+        
         fetch('api/Devices/Index')
             .then(response => response.json())
             .then(data => {
@@ -18,6 +19,17 @@ export class FetchDevice extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({ cscList: data, loading: false });
+            });
+
+        fetch('api/devices/translate?language=SV')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    DeviceId: data.caseDeviceId,
+                    CaseId: data.caseId,
+                    GroupDomain: data.caseDeviceGroup,
+                    Name: data.caseDeviceName
+                });
             });
     }
 
@@ -38,16 +50,23 @@ export class FetchDevice extends Component {
         }
     }
 
+    sendMail(password) {
+        fetch('api/Users/SendMail?message=Hejsan&userMail=' + sessionStorage.getItem("userEmail") + '&password=' + password)
+            .then(response => response.json())
+            .then(jsonResult => {
+                console.log("Mail skickades: " + jsonResult);
+            });
+    }
+
     renderCaseDeviceTable(devList, cscList) {
         return (
             <table className='table'>
                 <thead>
                     <tr className="notfirst">
-                        <th>Device id</th>
-                        <th>Case id</th>
-                        <th>Group/Domain</th>
-                        <th>Name</th>
-                        <th>Name</th>
+                        <th>{this.state.DeviceId}</th>
+                        <th>{this.state.CaseId}</th>
+                        <th>{this.state.GroupDomain}</th>
+                        <th>{this.state.Name}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +93,7 @@ export class FetchDevice extends Component {
             <h1>Device Data</h1>
             <p>This component demonstrates fetching device data from the server.</p>
             {contents}
+            <button onClick={() => this.sendMail('Teddy294')}>Send Mail</button>
         </div>);
     }
 }
@@ -94,4 +114,11 @@ export class CaseContacts {
     CaseContactNotify = true;
     CaseContactName = "";
     CaseContactGroup = "";
+}
+
+export class DeviceTranslate {
+    caseDeviceId = '';
+    caseId = '';
+    caseDeviceGroup = '';
+    caseDeviceName = "";
 }

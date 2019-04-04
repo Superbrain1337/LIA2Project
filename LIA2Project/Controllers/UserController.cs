@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.DirectoryServices;
 using System.Net.Mail;
 using System.Net;
+using MimeKit;
+using MailKit;
+using MailKit.Net.Smtp;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using LIA2Project.Models.ViewModels;
 
 namespace LIA2Project.Controllers
 {
@@ -101,6 +106,27 @@ namespace LIA2Project.Controllers
         {
             try
             {
+                var mimeMessage = new MimeMessage();
+                mimeMessage.From.Add(new MailboxAddress("Samuel", userMail));
+                mimeMessage.To.Add(new MailboxAddress("Knut", "knut@programduon.se"));
+                mimeMessage.Subject = "Test mail";
+
+                mimeMessage.Body = new TextPart("plain")
+                {
+                    Text = @"Detta är ett testmeddelande. Får se om å ä ö Å Ä Ö funkar."
+                };
+
+                var client = new SmtpClient();
+                client.Connect("localhost", 50115);
+                client.Authenticate(new NetworkCredential("SG", password));
+                client.Send(mimeMessage);
+                client.Disconnect(true);
+                //smtp.Connect("samuel@programduon.se", 50115);
+                return true;
+            }
+                
+            /*try
+            {
                 string sender = "samuel@programduon.se";
                 string reciever = "knut@programduon.se";
                 var smtp = new SmtpClient
@@ -120,13 +146,46 @@ namespace LIA2Project.Controllers
                 };
 
                 smtp.Send(mess);
-
                 return true;
-            }
+            }*/
             catch
             {
                 return false;
             }
+        }
+
+        [HttpGet]
+        [Route("api/translate")]
+        public TranslateViewModel Translate(string language)
+        {
+            var TLVM = new TranslateViewModel();
+            if (language == "SV")
+            {
+                TLVM.Home = "Startsida";
+                TLVM.Cases = "Ärenden";
+                TLVM.Devices = "Enheter";
+                TLVM.Login = "Logga in";
+                TLVM.Logout = "Logga ut";
+
+                TLVM.CaseDeviceGroup = "EnhetsGrupp";
+                TLVM.CaseDeviceId = "EnhetsID";
+                TLVM.CaseDeviceName = "EnhetsNamn";
+                
+            }
+            else if(language == "EN")
+            {
+                TLVM.Home = "Home";
+                TLVM.Cases = "Cases";
+                TLVM.Devices = "Devices";
+                TLVM.Login = "Login";
+                TLVM.Logout = "Logout";
+
+                TLVM.CaseDeviceGroup = "DeviceGroup";
+                TLVM.CaseDeviceId = "DeviceID";
+                TLVM.CaseDeviceName = "DeviceName";
+            }
+
+            return TLVM;
         }
     }
 }

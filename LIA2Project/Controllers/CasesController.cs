@@ -28,6 +28,10 @@ namespace LIA2Project.Controllers
             IList<Cases> cutDownList = new List<Cases>();
             IEnumerable<Cases> fullList = objCase.GetAllCases();
             int size = fullList.Count();
+            if(size < 2)
+            {
+                return fullList;
+            }
             cutDownList.Add(fullList.ElementAt(size - 2));
             cutDownList.Add(fullList.Last());
             return cutDownList;
